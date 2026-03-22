@@ -1,6 +1,6 @@
 <div align="center">
     <img src="CorgiNotch/Shared/Assets/CorgiAssets.xcassets/AppIcon.appiconset/CorgiNotch-1024.png" width=200 height=200>
-    <h1>Thaw</h1>
+    <h1>Corge Notch</h1>
 </div>
 
 Thaw is a powerful menu bar management tool. While its primary function is hiding and showing menu bar items, it aims to cover a wide variety of additional features to make it one of the most versatile menu bar tools available.
