@@ -51,12 +51,6 @@
 
 ## Installation
 
-### Homebrew
-
-Homebrew installation is not published for this fork yet.
-
-For now, use a GitHub release build or build from source.
-
 ### Manual Download
 
 1. Download the latest release from [GitHub Releases](https://github.com/sssstf0rest/corgi-notch/releases).
