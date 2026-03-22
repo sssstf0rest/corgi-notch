@@ -95,6 +95,13 @@ CorgiNotch/
 - Fixed custom Audio/Brightness decrement floors so non-default step sizes no longer leave a faint non-zero system value when the HUD reaches `0%`
 - Output audio now hard-mutes at the custom-step zero floor, and brightness snaps sub-visible residual values to a real zero
 - Rewrote `README.md` to accurately present CorgiNotch as the Thaw-maintained continuation fork of MewNotch and removed unrelated placeholder project text
+- Audited the current Sparkle setup and confirmed the updater is wired in code but blocked by a placeholder feed URL and missing public key
+- Added build-setting-backed Sparkle configuration so release builds embed the appcast URL and public EdDSA key instead of placeholder values
+- Added `scripts/release/build-release-archive.sh` and `scripts/release/fetch-sparkle-tools.sh` for maintainer-side Sparkle release preparation
+- Added `.github/workflows/publish-sparkle-appcast.yml` to publish GitHub Release archives into a `gh-pages` Sparkle update site and regenerate `appcast.xml`
+- Added `docs/sparkle-release-flow.md` documenting one-time key setup, GitHub Pages configuration, and the release publishing flow
+- Corrected the workflow so it stages the new archive outside `gh-pages` before copying it in, which avoids false multi-archive failures after the first published update
+- Verified with a local Debug build that the processed app bundle contains the configured `SUFeedURL` and `SUPublicEDKey`
 
 ### 2026-03-21
 - Removed album-art click navigation and Chrome tab matching (source app launches via app icon badge only)

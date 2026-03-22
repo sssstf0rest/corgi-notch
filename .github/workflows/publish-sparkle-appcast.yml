@@ -1,0 +1,154 @@
+name: Publish Sparkle Appcast
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Git tag or release tag to publish to Sparkle
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish-appcast:
+    runs-on: macos-15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.release_tag }}
+      RELEASE_BODY: ${{ github.event_name == 'release' && github.event.release.body || '' }}
+      SPARKLE_APPCAST_URL: https://sssstf0rest.github.io/corgi-notch/appcast.xml
+      SPARKLE_PUBLIC_ED_KEY: ${{ vars.SPARKLE_PUBLIC_ED_KEY }}
+      SPARKLE_PRIVATE_ED_KEY_BASE64: ${{ secrets.SPARKLE_PRIVATE_ED_KEY_BASE64 }}
+      PAGES_BRANCH: gh-pages
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate Sparkle configuration
+        run: |
+          if [[ -z "$SPARKLE_PUBLIC_ED_KEY" ]]; then
+            echo "Missing repository variable: SPARKLE_PUBLIC_ED_KEY" >&2
+            exit 1
+          fi
+
+          if [[ -z "$SPARKLE_PRIVATE_ED_KEY_BASE64" ]]; then
+            echo "Missing repository secret: SPARKLE_PRIVATE_ED_KEY_BASE64" >&2
+            exit 1
+          fi
+
+      - name: Fetch Sparkle tools
+        run: |
+          ./scripts/release/fetch-sparkle-tools.sh "$RUNNER_TEMP/sparkle"
+
+      - name: Import Sparkle private key
+        run: |
+          echo "$SPARKLE_PRIVATE_ED_KEY_BASE64" | base64 --decode > "$RUNNER_TEMP/sparkle_private_key"
+          "$RUNNER_TEMP/sparkle/bin/generate_keys" -f "$RUNNER_TEMP/sparkle_private_key" >/dev/null
+
+      - name: Prepare gh-pages working tree
+        run: |
+          SITE_DIR="$RUNNER_TEMP/appcast-site"
+
+          if git ls-remote --exit-code --heads origin "$PAGES_BRANCH" >/dev/null 2>&1; then
+            git clone --depth 1 --branch "$PAGES_BRANCH" \
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+              "$SITE_DIR"
+          else
+            mkdir -p "$SITE_DIR"
+            cd "$SITE_DIR"
+            git init
+            git checkout --orphan "$PAGES_BRANCH"
+            git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          fi
+
+          touch "$SITE_DIR/.nojekyll"
+
+      - name: Download release archive
+        run: |
+          SITE_DIR="$RUNNER_TEMP/appcast-site"
+          RELEASE_DIR="$RUNNER_TEMP/release-asset"
+
+          rm -rf "$RELEASE_DIR"
+          mkdir -p "$RELEASE_DIR"
+
+          gh release download "$RELEASE_TAG" --pattern "CorgiNotch*.zip" --dir "$RELEASE_DIR"
+
+          mapfile -t ARCHIVES < <(find "$RELEASE_DIR" -maxdepth 1 -type f -name 'CorgiNotch*.zip' | sort)
+
+          if [[ "${#ARCHIVES[@]}" -ne 1 ]]; then
+            echo "Expected exactly one CorgiNotch*.zip asset in release ${RELEASE_TAG}, found ${#ARCHIVES[@]}." >&2
+            exit 1
+          fi
+
+          cp "${ARCHIVES[0]}" "$SITE_DIR/"
+
+          printf '%s\n' "$SITE_DIR/$(basename "${ARCHIVES[0]}")" > "$RUNNER_TEMP/release_archive_path"
+
+      - name: Verify archive Sparkle metadata
+        run: |
+          ARCHIVE_PATH="$(cat "$RUNNER_TEMP/release_archive_path")"
+          UNPACK_DIR="$RUNNER_TEMP/unpacked-release"
+
+          rm -rf "$UNPACK_DIR"
+          mkdir -p "$UNPACK_DIR"
+          ditto -x -k "$ARCHIVE_PATH" "$UNPACK_DIR"
+
+          APP_PATH="$(find "$UNPACK_DIR" -maxdepth 1 -type d -name '*.app' -print -quit)"
+
+          if [[ -z "$APP_PATH" ]]; then
+            echo "Unable to find .app bundle inside $ARCHIVE_PATH" >&2
+            exit 1
+          fi
+
+          INFO_PLIST="$APP_PATH/Contents/Info.plist"
+          EMBEDDED_PUBLIC_KEY="$(/usr/libexec/PlistBuddy -c 'Print :SUPublicEDKey' "$INFO_PLIST")"
+          EMBEDDED_FEED_URL="$(/usr/libexec/PlistBuddy -c 'Print :SUFeedURL' "$INFO_PLIST")"
+
+          if [[ "$EMBEDDED_PUBLIC_KEY" != "$SPARKLE_PUBLIC_ED_KEY" ]]; then
+            echo "Release archive does not embed the expected Sparkle public key." >&2
+            exit 1
+          fi
+
+          if [[ "$EMBEDDED_FEED_URL" != "$SPARKLE_APPCAST_URL" ]]; then
+            echo "Release archive points to '$EMBEDDED_FEED_URL' instead of '$SPARKLE_APPCAST_URL'." >&2
+            exit 1
+          fi
+
+      - name: Write Sparkle release notes file
+        run: |
+          ARCHIVE_PATH="$(cat "$RUNNER_TEMP/release_archive_path")"
+          NOTES_PATH="${ARCHIVE_PATH%.zip}.md"
+
+          if [[ -n "$RELEASE_BODY" ]]; then
+            printf '%s\n' "$RELEASE_BODY" > "$NOTES_PATH"
+          else
+            printf '# %s\n\nSee the GitHub release page for details.\n' "$RELEASE_TAG" > "$NOTES_PATH"
+          fi
+
+      - name: Generate Sparkle appcast
+        run: |
+          "$RUNNER_TEMP/sparkle/bin/generate_appcast" "$RUNNER_TEMP/appcast-site"
+
+      - name: Publish gh-pages branch
+        run: |
+          SITE_DIR="$RUNNER_TEMP/appcast-site"
+          cd "$SITE_DIR"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "No appcast changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Publish Sparkle appcast for ${RELEASE_TAG}"
+          git push origin "$PAGES_BRANCH"

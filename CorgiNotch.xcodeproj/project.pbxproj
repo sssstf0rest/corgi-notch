@@ -365,6 +365,8 @@
 				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.corginotch.CorgiNotch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPARKLE_APPCAST_URL = "https://sssstf0rest.github.io/corgi-notch/appcast.xml";
+				SPARKLE_PUBLIC_ED_KEY = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CorgiNotch/Infrastructure/CorgiNotch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -408,6 +410,8 @@
 				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.corginotch.CorgiNotch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPARKLE_APPCAST_URL = "https://sssstf0rest.github.io/corgi-notch/appcast.xml";
+				SPARKLE_PUBLIC_ED_KEY = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CorgiNotch/Infrastructure/CorgiNotch-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

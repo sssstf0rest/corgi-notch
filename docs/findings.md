@@ -87,3 +87,19 @@
 ## Follow-up Verification
 - `xcodebuild -project CorgiNotch.xcodeproj -scheme CorgiNotch -configuration Debug -derivedDataPath /tmp/corgi-notch-derived CODE_SIGNING_ALLOWED=NO build` succeeded after the zero-floor fix.
 - I did not run a live hardware validation for brightness/audio keys from this environment, so the remaining validation is an on-device check with a non-default step size such as `3%`.
+
+## Sparkle Release Flow Findings
+- The app already instantiates `SPUStandardUpdaterController` in `UpdaterViewModel`, so the UI-side updater hook exists.
+- Sparkle is currently non-functional because `SUFeedURL` in `Info.plist` points to `https://example.com/corgi-notch/appcast.xml`, and `SUPublicEDKey` is empty.
+- GitHub Releases alone are not sufficient for Sparkle. The project still needs:
+  - a real appcast feed URL
+  - a Sparkle EdDSA public key embedded in the app
+  - a private key kept outside the repo for signing update metadata
+  - generated `appcast.xml` entries and signed update archives
+- The cleanest hosting model for this repo is:
+  - GitHub Releases for human-facing release downloads
+  - GitHub Pages on `gh-pages` for Sparkle assets (`appcast.xml`, archives, and delta files)
+- To preserve Sparkle delta generation, each release job needs access to prior update archives before re-running `generate_appcast`, which makes a persistent `gh-pages` branch a good fit.
+- The current repo has no `.github/workflows` directory yet, so Sparkle publishing automation must be added from scratch.
+- The implemented workflow has to download the new release archive into a temporary directory before copying it into `gh-pages`; otherwise older `CorgiNotch*.zip` files already stored in `gh-pages` would break the "exactly one release asset" validation on later releases.
+- A local verification build confirmed the processed app bundle now embeds the configured `SUFeedURL` and `SUPublicEDKey`, so the new build-setting wiring for Sparkle is functioning.

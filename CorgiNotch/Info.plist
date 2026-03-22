@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>SUFeedURL</key>
-	<string>https://example.com/corgi-notch/appcast.xml</string>
+	<string>$(SPARKLE_APPCAST_URL)</string>
 	<key>SUPublicEDKey</key>
-	<string></string>
+	<string>$(SPARKLE_PUBLIC_ED_KEY)</string>
 </dict>
 </plist>

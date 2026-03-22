@@ -49,3 +49,11 @@ Phase 4 complete
 - [x] Snap downward residual values that would round to `0%` to a real floor
 - [x] Ensure output audio is muted when the custom decrement path reaches zero
 - [x] Rebuild and record the result in `docs/`
+
+## Follow-up Task: Sparkle Release Flow
+- [x] Inspect the current updater wiring and confirm why GitHub Releases alone are insufficient
+- [x] Identify the missing Sparkle requirements for this repo: real feed URL, public key injection, signed appcast generation, and release hosting
+- [x] Configure the app to use a real Sparkle feed and injectable public key
+- [x] Add release automation and maintainer scripts for publishing Sparkle updates
+- [x] Document the one-time setup and ongoing release process in `docs/`
+- [x] Verify the updated configuration and scripts
