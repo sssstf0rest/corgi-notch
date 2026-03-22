@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="Resources/Icon.svg" width=200 height=200>
+    <img src="CorgiNotch/Shared/Assets/CorgiAssets.xcassets/AppIcon.appiconset/CorgiNotch-1024.png" width=200 height=200>
     <h1>Thaw</h1>
 </div>
 
