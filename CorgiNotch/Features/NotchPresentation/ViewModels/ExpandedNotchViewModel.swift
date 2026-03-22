@@ -8,41 +8,13 @@
 import SwiftUI
 
 class ExpandedNotchViewModel: ObservableObject {
-    
-    enum NotchViewType: String, CaseIterable, Identifiable {
-        var id: String {
-            self.rawValue
-        }
-        
-        case Home
-        case Shelf
-        
-        var imageSystemName: String {
-            switch self {
-            case .Home:
-                return "house"
-            case .Shelf:
-                return "folder"
-            }
-        }
-    }
-    
-    @Published var currentView: NotchViewType = .Home
-    
+
     @Published var nowPlayingMedia: NowPlayingMediaModel?
-    
-    @Published var shelfFileGroups: [ShelfFileGroupModel] = [] {
-        didSet {
-            ShelfDefaults.shared.shelfFileGroups = shelfFileGroups
-        }
-    }
-    
+
     init() {
         self.startListeners()
-        
+
         self.nowPlayingMedia = NowPlaying.shared.nowPlayingModel
-        
-        self.shelfFileGroups = ShelfDefaults.shared.shelfFileGroups
     }
     
     deinit {

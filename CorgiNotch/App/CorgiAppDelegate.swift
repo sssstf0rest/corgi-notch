@@ -37,7 +37,6 @@ class CorgiAppDelegate: NSObject, NSApplicationDelegate {
         AudioInput.sharedInstance()
         AudioOutput.sharedInstance()
         Brightness.sharedInstance()
-        PowerStatus.sharedInstance()
         NowPlaying.shared.startListener()
         
         timer = .scheduledTimer(
@@ -59,7 +58,9 @@ class CorgiAppDelegate: NSObject, NSApplicationDelegate {
         hasVisibleWindows: Bool
     ) -> Bool {
         if !hasVisibleWindows {
-            openSettingsWindow.callAsFunction()
+            SettingsWindowPresenter.showSettings(
+                using: openSettingsWindow.callAsFunction
+            )
         }
         
         return !hasVisibleWindows

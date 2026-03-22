@@ -50,17 +50,12 @@ class CorgiNotch {
         // Settings Icons (SF Symbols)
         static let icGeneral = Image(systemName: "gear")
         static let icNotch = Image(systemName: "macbook")
-        static let icMirror = Image(systemName: "person.crop.square.fill")
         static let icNowPlaying = Image(systemName: "music.note")
         static let icHud = Image(systemName: "slider.horizontal.3")
         static let icAudio = Image(systemName: "speaker.wave.3.fill")
         static let icBrightnessFill = Image(systemName: "sun.max.fill")
-        static let icPower = Image(systemName: "bolt.fill")
         static let icMedia = Image(systemName: "music.note")
         static let icAbout = Image(systemName: "info.circle")
-        static let icTimer = Image(systemName: "timer")
-        static let icVideo = Image(systemName: "video.fill")
-        
         static let icDisplay = Image(systemName: "display")
         static let icLock = Image(systemName: "lock.fill")
         static let icReset = Image(systemName: "arrow.counterclockwise")
@@ -70,8 +65,6 @@ class CorgiNotch {
         static let icHaptic = Image(systemName: "hand.tap.fill")
         static let icCornerRadius = Image(systemName: "app.dashed")
         static let icSeparator = Image(systemName: "line.3.horizontal")
-        static let icFileShelf = Image(systemName: "tray.and.arrow.down.fill")
-        static let icAirDrop = Image(systemName: "shareplay")
         
         static let icAlbumArt = Image(systemName: "photo")
         static let icArtist = Image(systemName: "music.mic")
@@ -88,6 +81,7 @@ class CorgiNotch {
         // General Settings Icons
         static let icLaunchAtLogin = Image(systemName: "arrow.up.circle.fill")
         static let icStatusIcon = Image(systemName: "menubar.rectangle")
+        static let icDock = Image(systemName: "dock.rectangle")
         static let icDisableSystemHud = Image(systemName: "eye.slash.fill")
         static let icWarning = Image(systemName: "exclamationmark.triangle.fill")
     }
@@ -96,15 +90,11 @@ class CorgiNotch {
         static let general = IconColor.gray
         static let notch = IconColor.blue
         
-        static let mirror = IconColor.purple
         static let nowPlaying = IconColor.pink
         
         static let hud = IconColor.orange
         static let audio = IconColor.blue
         static let brightness = IconColor.yellow
-        static let power = IconColor.green
-        static let timer = IconColor.gray
-        
         static let about = IconColor.gray
         
         static let lock = IconColor.gray
@@ -113,8 +103,6 @@ class CorgiNotch {
         static let hover = IconColor.indigo
         static let haptic = IconColor.teal
         static let separator = IconColor.gray
-        static let fileShelf = IconColor.orange
-        static let airDrop = IconColor.blue
         
         static let albumArt = IconColor.blue
         static let artist = IconColor.green
@@ -127,7 +115,6 @@ class CorgiNotch {
         static let stepSize = IconColor.orange
         static let autoBrightness = IconColor.green
         static let systemHud = IconColor.red
-        static let video = IconColor.purple
     }
     
     class Lotties {

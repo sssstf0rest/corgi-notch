@@ -28,12 +28,8 @@ class NotchViewModel: ObservableObject {
         height: 0
     )
     
-    @Published var isDropTarget: Bool = false
-    
     @Published var isHovered: Bool = false
     @Published var isExpanded: Bool = false
-    
-    @Published var isPinned: Bool = false
     
     private var hoverTimer: Timer? = nil
     
@@ -42,7 +38,7 @@ class NotchViewModel: ObservableObject {
     ) {
         self.screen = screen
         
-        let shouldForce = NotchDefaults.shared.notchDisplayVisibility != .NotchedDisplayOnly
+        let shouldForce = NotchDefaults.shared.notchDisplayVisibility != .notchedDisplayOnly
         
         self.notchSize = NotchUtils.shared.notchSize(
             screen: self.screen,
@@ -58,7 +54,7 @@ class NotchViewModel: ObservableObject {
     }
     
     func refreshNotchSize() {
-        let shouldForce = NotchDefaults.shared.notchDisplayVisibility != .NotchedDisplayOnly
+        let shouldForce = NotchDefaults.shared.notchDisplayVisibility != .notchedDisplayOnly
         
         self.notchSize = NotchUtils.shared.notchSize(
             screen: self.screen,
@@ -101,7 +97,7 @@ class NotchViewModel: ObservableObject {
                     self.onTap()
                 }
             }
-        } else if !isPinned {
+        } else {
             withAnimation {
                 self.isExpanded = false
                 

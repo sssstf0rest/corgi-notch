@@ -1,5 +1,5 @@
 //
-//  GeneraSettingsView.swift
+//  GeneralSettingsView.swift
 //  CorgiNotch
 //
 //  Created by Monu Kumar on 27/02/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import LaunchAtLogin
 
-struct GeneraSettingsView: View {
+struct GeneralSettingsView: View {
 
     @StateObject var appDefaults = AppDefaults.shared
     @StateObject var notchDefaults = NotchDefaults.shared
@@ -38,6 +38,8 @@ struct GeneraSettingsView: View {
                 ) {
                     Toggle("", isOn: $appDefaults.showMenuIcon)
                 }
+
+
             } header: {
                 Text("App")
             }
@@ -127,5 +129,5 @@ struct GeneraSettingsView: View {
 }
 
 #Preview {
-    GeneraSettingsView()
+    GeneralSettingsView()
 }

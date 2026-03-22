@@ -17,8 +17,6 @@ struct NotchSettingsView: View {
 
     
     @StateObject var notchDefaults = NotchDefaults.shared
-    @StateObject var mirrorDefaults = MirrorDefaults.shared
-    @StateObject var shelfDefaults = ShelfDefaults.shared
     
     var body: some View {
         Form {
@@ -36,7 +34,7 @@ struct NotchSettingsView: View {
                     .labelsHidden()
                 }
                 
-                if notchDefaults.notchDisplayVisibility == .Custom {
+                if notchDefaults.notchDisplayVisibility == .custom {
                     VStack(spacing: 8) {
                         HStack {
                             Text("Choose Displays to show notch on")
@@ -82,7 +80,7 @@ struct NotchSettingsView: View {
                 
                 SettingsRow(
                     title: "Show on Lock Screen",
-                    subtitle: "Incompatible with File Shelf feature",
+                    subtitle: "Show notch overlay on the lock screen",
                     icon: CorgiNotch.Assets.icLock,
                     color: CorgiNotch.Colors.lock
                 ) {
@@ -102,15 +100,6 @@ struct NotchSettingsView: View {
                         .onChange(of: notchDefaults.hideOnFullScreen) { _, _ in
                             viewModel.refreshNotches()
                         }
-                }
-                
-                SettingsRow(
-                    title: "Reset View on Collapse",
-                    subtitle: notchDefaults.resetViewOnCollapse ? "Notch resets to Home when Collapsed" : "Notch will retain state when Collapsed",
-                    icon: CorgiNotch.Assets.icReset,
-                    color: CorgiNotch.Colors.notch
-                ) {
-                    Toggle("", isOn: $notchDefaults.resetViewOnCollapse)
                 }
                 
             } header: {
@@ -169,28 +158,6 @@ struct NotchSettingsView: View {
                 }
             } header: {
                 Text("Interaction")
-            }
-
-            Section {
-                SettingsRow(
-                    title: "File Shelf",
-                    subtitle: "Allow dragging and dropping files onto the notch",
-                    icon: CorgiNotch.Assets.icFileShelf,
-                    color: CorgiNotch.Colors.fileShelf
-                ) {
-                    Toggle("", isOn: $shelfDefaults.isFileShelfEnabled)
-                }
-
-                SettingsRow(
-                    title: "AirDrop",
-                    subtitle: "Show AirDrop button in the file shelf view",
-                    icon: CorgiNotch.Assets.icAirDrop,
-                    color: CorgiNotch.Colors.airDrop
-                ) {
-                    Toggle("", isOn: $shelfDefaults.isAirDropEnabled)
-                }
-            } header: {
-                Text("File Shelf & AirDrop")
             }
 
         }

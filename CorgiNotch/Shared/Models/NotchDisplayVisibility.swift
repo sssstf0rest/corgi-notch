@@ -11,19 +11,18 @@ enum NotchDisplayVisibility: String, CaseIterable, Codable, Identifiable {
     var id: String {
         self.rawValue
     }
-    
-    case AllDisplays
-    case NotchedDisplayOnly
-    
-    case Custom
-    
+
+    case allDisplays = "AllDisplays"
+    case notchedDisplayOnly = "NotchedDisplayOnly"
+    case custom = "Custom"
+
     var displayName: String {
         switch self {
-        case .AllDisplays:
+        case .allDisplays:
             return "All Displays"
-        case .NotchedDisplayOnly:
+        case .notchedDisplayOnly:
             return "Notched Displays Only"
-        case .Custom:
+        case .custom:
             return "Custom"
         }
     }

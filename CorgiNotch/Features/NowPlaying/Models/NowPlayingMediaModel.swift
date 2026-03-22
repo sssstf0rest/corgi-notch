@@ -27,7 +27,7 @@ struct NowPlayingMediaModel: Hashable {
     
     var refreshedAt: Date
     
-    static var Placeholder: NowPlayingMediaModel {
+    static var placeholder: NowPlayingMediaModel {
         return .init(
             appBundleIdentifier: "<App Bundle Identifier Here>",
             appName: "<App Name Here>",

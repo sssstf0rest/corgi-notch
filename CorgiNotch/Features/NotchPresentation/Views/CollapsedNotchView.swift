@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import Lottie
-
 struct CollapsedNotchView: View {
     
     var namespace: Namespace.ID
@@ -36,7 +34,7 @@ struct CollapsedNotchView: View {
                 
                 MinimalHUDLeftView(
                     notchViewModel: notchViewModel,
-                    defaults: HUDAudioInputDefaults.shared,
+                    defaults: HUDAudioOutputDefaults.shared,
                     hudModel: collapsedNotchViewModel.inputAudioVolumeHUD
                 )
                 
@@ -96,7 +94,7 @@ struct CollapsedNotchView: View {
                 
                 MinimalHUDRightView(
                     notchViewModel: notchViewModel,
-                    defaults: HUDAudioInputDefaults.shared,
+                    defaults: HUDAudioOutputDefaults.shared,
                     hudModel: collapsedNotchViewModel.inputAudioVolumeHUD
                 )
                 
@@ -106,12 +104,6 @@ struct CollapsedNotchView: View {
                     hudModel: collapsedNotchViewModel.brightnessHUD
                 )
             }
-            
-            PowerHUDView(
-                notchViewModel: notchViewModel,
-                defaults: HUDPowerDefaults.shared,
-                hudModel: collapsedNotchViewModel.powerStatusHUD
-            )
             
             AudioDeviceHUDView(
                 notchViewModel: notchViewModel,
@@ -134,7 +126,7 @@ struct CollapsedNotchView: View {
             
             ProgressHUDView(
                 notchViewModel: notchViewModel,
-                defaults: HUDAudioInputDefaults.shared,
+                defaults: HUDAudioOutputDefaults.shared,
                 hudModel: collapsedNotchViewModel.inputAudioVolumeHUD
             )
             
@@ -154,7 +146,7 @@ struct CollapsedNotchView: View {
             
             NotchedHUDView(
                 notchViewModel: notchViewModel,
-                defaults: HUDAudioInputDefaults.shared,
+                defaults: HUDAudioOutputDefaults.shared,
                 hudModel: collapsedNotchViewModel.inputAudioVolumeHUD
             )
             

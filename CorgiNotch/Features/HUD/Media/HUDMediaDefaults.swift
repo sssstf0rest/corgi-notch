@@ -9,14 +9,14 @@ import SwiftUI
 
 class HUDMediaDefaults: HUDDefaultsProtocol {
     
-    internal static var PREFIX: String = "HUD_Media_"
+    internal static var keyPrefix: String = "HUD_Media_"
     
     static let shared = HUDMediaDefaults()
     
     private init() {}
     
     @PrimitiveUserDefault(
-        PREFIX + "Enabled",
+        keyPrefix + "Enabled",
         defaultValue: true
     )
     var isEnabled: Bool {
@@ -28,8 +28,8 @@ class HUDMediaDefaults: HUDDefaultsProtocol {
     }
     
     @CodableUserDefault(
-        PREFIX + "Style",
-        defaultValue: HUDStyle.Minimal
+        keyPrefix + "Style",
+        defaultValue: HUDStyle.minimal
     )
     var style: HUDStyle {
         didSet {

@@ -27,7 +27,9 @@ struct NotchOptionsView: View {
         }
         
         Button("Settings") {
-            openSettings()
+            SettingsWindowPresenter.showSettings(
+                using: openSettings.callAsFunction
+            )
         }
         .keyboardShortcut(
             ",",

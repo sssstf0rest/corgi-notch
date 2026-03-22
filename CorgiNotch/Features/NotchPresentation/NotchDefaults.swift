@@ -9,7 +9,7 @@ import Foundation
 
 class NotchDefaults: ObservableObject {
     
-    private static var PREFIX: String = "Notch_"
+    private static var keyPrefix: String = "Notch_"
     
     static let shared = NotchDefaults()
     
@@ -26,7 +26,7 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "HideOnFullScreen",
+        keyPrefix + "HideOnFullScreen",
         defaultValue: true
     )
     var hideOnFullScreen: Bool {
@@ -36,8 +36,8 @@ class NotchDefaults: ObservableObject {
     }
     
     @CodableUserDefault(
-        PREFIX + "NotchDisplayVisibility",
-        defaultValue: NotchDisplayVisibility.NotchedDisplayOnly
+        keyPrefix + "NotchDisplayVisibility",
+        defaultValue: NotchDisplayVisibility.notchedDisplayOnly
     )
     var notchDisplayVisibility: NotchDisplayVisibility {
         didSet {
@@ -46,7 +46,7 @@ class NotchDefaults: ObservableObject {
     }
     
     @CodableUserDefault(
-        PREFIX + "ShownOnDisplay",
+        keyPrefix + "ShownOnDisplay",
         defaultValue: [:]
     )
     var shownOnDisplay: [String: Bool] {
@@ -56,7 +56,7 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "ShownOnLockScreen",
+        keyPrefix + "ShownOnLockScreen",
         defaultValue: true
     )
     var shownOnLockScreen: Bool {
@@ -66,7 +66,7 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "resetViewOnCollapse",
+        keyPrefix + "resetViewOnCollapse",
         defaultValue: true
     )
     var resetViewOnCollapse: Bool {
@@ -76,8 +76,8 @@ class NotchDefaults: ObservableObject {
     }
     
     @CodableUserDefault(
-        PREFIX + "HeightMode",
-        defaultValue: NotchHeightMode.Match_Notch
+        keyPrefix + "HeightMode",
+        defaultValue: NotchHeightMode.matchNotch
     )
     var heightMode: NotchHeightMode {
         didSet {
@@ -86,8 +86,8 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "GlassEffect",
-        defaultValue: false
+        keyPrefix + "GlassEffect",
+        defaultValue: true
     )
     var applyGlassEffect: Bool {
         didSet {
@@ -96,8 +96,8 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "ExpandOnHover",
-        defaultValue: false
+        keyPrefix + "ExpandOnHover",
+        defaultValue: true
     )
     var expandOnHover: Bool {
         didSet {
@@ -106,7 +106,7 @@ class NotchDefaults: ObservableObject {
     }
 
     @PrimitiveUserDefault(
-        PREFIX + "HapticFeedback",
+        keyPrefix + "HapticFeedback",
         defaultValue: true
     )
     var hapticFeedback: Bool {
@@ -116,8 +116,8 @@ class NotchDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "ExpandedNotchShowDividers",
-        defaultValue: true
+        keyPrefix + "ExpandedNotchShowDividers",
+        defaultValue: false
     )
     var showDividers: Bool {
         didSet {
@@ -126,10 +126,9 @@ class NotchDefaults: ObservableObject {
     }
     
     @CodableUserDefault(
-        PREFIX + "ExpandedNotchItems",
+        keyPrefix + "ExpandedNotchItems",
         defaultValue: [
-            ExpandedNotchItem.Mirror,
-            ExpandedNotchItem.NowPlaying
+            ExpandedNotchItem.nowPlaying
         ]
     )
     var expandedNotchItems: [ExpandedNotchItem] {
@@ -139,7 +138,7 @@ class NotchDefaults: ObservableObject {
     }
     
     @CodableUserDefault(
-        PREFIX + "ExpandedItemsOrder",
+        keyPrefix + "ExpandedItemsOrder",
         defaultValue: ExpandedNotchItem.allCases
     )
     var expandedItemsOrder: [ExpandedNotchItem] {

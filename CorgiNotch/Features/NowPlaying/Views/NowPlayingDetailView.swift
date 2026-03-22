@@ -40,7 +40,7 @@ struct NowPlayingDetailView: View {
             )
         }
     }
-    
+
     var body: some View {
         HStack(
             spacing: 8
@@ -210,12 +210,7 @@ struct NowPlayingDetailView: View {
                 
                 Slider(
                     value: $elapsedTime,
-                    in: 0...nowPlayingModel.totalDuration,
-                    onEditingChanged: { editing in
-                        if !editing {
-//                            NowPlaying.shared.seek(to: elapsedTime)
-                        }
-                    }
+                    in: 0...nowPlayingModel.totalDuration
                 )
                 .controlSize(.mini)
                 .disabled(true)
@@ -231,30 +226,13 @@ struct NowPlayingDetailView: View {
     
     @ViewBuilder
     func albumArtView() -> some View {
-        (nowPlayingModel.albumArt ?? NowPlayingMediaModel.Placeholder.albumArt!)
-            .resizable()
-            .aspectRatio(
-                1,
-                contentMode: .fit
-            )
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: nowPlayingDefaults.albumArtCornerRadius
-                )
-            )
+        albumArtImage()
             .overlay {
                 if nowPlayingDefaults.showAppIcon {
                     Button(
                         action: {
-                            guard let url = NSWorkspace.shared.urlForApplication(
-                                withBundleIdentifier: nowPlayingModel.appBundleIdentifier
-                            ) else {
-                                return
-                            }
-                            
-                            NSWorkspace.shared.openApplication(
-                                at: url,
-                                configuration: .init()
+                            NowPlayingNavigationService.shared.openSourceApplication(
+                                for: nowPlayingModel
                             )
                         }
                     ) {
@@ -296,6 +274,21 @@ struct NowPlayingDetailView: View {
                     )
                 }
             }
+    }
+
+    @ViewBuilder
+    func albumArtImage() -> some View {
+        (nowPlayingModel.albumArt ?? NowPlayingMediaModel.placeholder.albumArt!)
+            .resizable()
+            .aspectRatio(
+                1,
+                contentMode: .fit
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: nowPlayingDefaults.albumArtCornerRadius
+                )
+            )
     }
 }
 

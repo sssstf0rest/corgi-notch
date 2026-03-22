@@ -6,20 +6,18 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct NotchView: View {
-    
+
     @Namespace var namespace
-    
+
     @Environment(\.openSettings) private var openSettings
-    
+
     @StateObject var notchDefaults = NotchDefaults.shared
-    @StateObject var shelfDefaults = ShelfDefaults.shared
 
     @StateObject var notchViewModel: NotchViewModel
     @StateObject var expandedNotchViewModel: ExpandedNotchViewModel = .init()
-    
+
     init(
         screen: NSScreen
     ) {
@@ -29,12 +27,12 @@ struct NotchView: View {
             )
         )
     }
-    
+
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                
+
                 ZStack(
                     alignment: .top
                 ) {
@@ -42,14 +40,14 @@ struct NotchView: View {
                         namespace: namespace,
                         notchViewModel: notchViewModel
                     )
-                    
+
                     ExpandedNotchView(
                         namespace: namespace,
                         notchViewModel: notchViewModel,
                         expandedNotchViewModel: expandedNotchViewModel,
                         collapsedNotchView: collapsedNotchView
                     ).hide(when: !notchViewModel.isExpanded)
-                    
+
                     collapsedNotchView
                 }
                 .glassEffect(when: notchDefaults.applyGlassEffect, in: NotchShape(
@@ -80,59 +78,13 @@ struct NotchView: View {
                         shouldExpand: notchDefaults.expandOnHover || notchDefaults.applyGlassEffect
                     )
                 }
-                .dropDestination(
-                    for: URL.self,
-                    action: { fileURLs, _ in
-                        guard shelfDefaults.isFileShelfEnabled else {
-                            return false
-                        }
-
-                        DispatchQueue.global(qos: .utility).async {
-                            guard let groupModel = ShelfFileGroupModel(
-                                urls: fileURLs
-                            ) else {
-                                print("groupModel could not be initialized")
-                                return
-                            }
-
-                            DispatchQueue.main.async {
-                                withAnimation {
-                                    expandedNotchViewModel.shelfFileGroups.append(
-                                        groupModel
-                                    )
-                                }
-                            }
-                        }
-
-                        return true
-                    },
-                    isTargeted: {
-                        guard shelfDefaults.isFileShelfEnabled else { return }
-                        notchViewModel.isDropTarget = $0
-                    }
-                )
-                .onChange(
-                    of: notchViewModel.isDropTarget
-                ) { oldValue, newValue in
-                    guard oldValue != newValue else { return }
-
-                    if newValue {
-                        expandedNotchViewModel.currentView = .Shelf
-
-                        notchViewModel.onTap()
-                    } else {
-                        notchViewModel.onHover(
-                            notchViewModel.isHovered
-                        )
-                    }
-                }
                 .onTapGesture(
                     perform: notchViewModel.onTap
                 )
-                
+
                 Spacer()
             }
-            
+
             Spacer()
         }
         .preferredColorScheme(.dark)

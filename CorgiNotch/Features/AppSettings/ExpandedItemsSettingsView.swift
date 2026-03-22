@@ -1,41 +1,25 @@
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct ExpandedItemsSettingsView: View {
-    
+
     @StateObject private var notchDefaults = NotchDefaults.shared
-    
-    @State private var selectedItem: ExpandedNotchItem? = .Mirror
-    
+
+    @State private var selectedItem: ExpandedNotchItem? = .nowPlaying
+
     var body: some View {
         VStack(spacing: 0) {
             // Unified Header Section
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text("Manage and Order Items")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 8) {
-                        Text("Show Separator")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Toggle("", isOn: $notchDefaults.showDividers)
-                            .toggleStyle(.switch)
-                            .labelsHidden()
-                            .controlSize(.small)
-                            .scaleEffect(0.8)
-                    }
-                }
-                .padding(.horizontal)
-                
+                Text("Manage and Order Items")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal)
+
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(Array(notchDefaults.expandedItemsOrder.enumerated()), id: \.element) { index, item in
                             let isEnabled = notchDefaults.expandedNotchItems.contains(item)
-                            
+
                             ExpandedItemTabButton(
                                 item: item,
                                 selection: $selectedItem,
@@ -58,22 +42,18 @@ struct ExpandedItemsSettingsView: View {
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                 }
-                
+
                 Divider()
             }
             .padding(.top)
             .background(Color(NSColor.windowBackgroundColor))
-            
+
             // Content View
             Group {
                 if let item = selectedItem {
                     switch item {
-                    case .Mirror:
-                        ExpandedMirrorSettingsView()
-                    case .NowPlaying:
+                    case .nowPlaying:
                         ExpandedNowPlayingSettingsView()
-                    case .Bash:
-                        ExpandedBashSettingsView()
                     }
                 } else {
                     ContentUnavailableView(
@@ -89,7 +69,7 @@ struct ExpandedItemsSettingsView: View {
         .toolbarTitleDisplayMode(.inline)
 
     }
-    
+
     private func toggleItem(_ item: ExpandedNotchItem) {
         if let index = notchDefaults.expandedNotchItems.firstIndex(of: item) {
             notchDefaults.expandedNotchItems.remove(at: index)
@@ -98,17 +78,17 @@ struct ExpandedItemsSettingsView: View {
             resortActiveItems()
         }
     }
-    
+
     private func moveItem(at index: Int, direction: Int) {
         let newIndex = index + direction
         guard newIndex >= 0 && newIndex < notchDefaults.expandedItemsOrder.count else { return }
-        
+
         withAnimation {
             notchDefaults.expandedItemsOrder.swapAt(index, newIndex)
             resortActiveItems()
         }
     }
-    
+
     private func resortActiveItems() {
         notchDefaults.expandedNotchItems.sort { a, b in
             let indexA = notchDefaults.expandedItemsOrder.firstIndex(of: a) ?? 0
@@ -127,9 +107,9 @@ struct ExpandedItemTabButton: View {
     let onToggle: () -> Void
     let onMoveLeft: () -> Void
     let onMoveRight: () -> Void
-    
+
     var isSelected: Bool { selection == item }
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Button {
@@ -142,13 +122,13 @@ struct ExpandedItemTabButton: View {
                     VStack(spacing: 12) {
                         Image(systemName: item.imageSystemName)
                             .font(.system(size: 24))
-                        
+
                         Text(item.displayName)
                             .font(.caption.weight(.medium))
                     }
                     .padding(.top, 12)
                     .foregroundStyle(isSelected ? .white : .secondary)
-                    
+
                     // Bottom: Arrows + Toggle
                     HStack(spacing: 8) {
                         // Left Arrow
@@ -163,7 +143,7 @@ struct ExpandedItemTabButton: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(!showLeftArrow)
-                        
+
                         // Toggle
                         Toggle("", isOn: Binding(
                             get: { isEnabled },
@@ -172,7 +152,7 @@ struct ExpandedItemTabButton: View {
                         .labelsHidden()
                         .toggleStyle(.switch)
                         .scaleEffect(0.6)
-                        
+
                         // Right Arrow
                         Button(action: onMoveRight) {
                             Image(systemName: "chevron.right")

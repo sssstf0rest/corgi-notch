@@ -9,14 +9,14 @@ import Foundation
 
 class AppDefaults: ObservableObject {
     
-    private static var PREFIX: String = "App_"
+    private static var keyPrefix: String = "App_"
     
     static let shared = AppDefaults()
     
     private init() {}
     
     @PrimitiveUserDefault(
-        PREFIX + "StatusIconShown",
+        keyPrefix + "StatusIconShown",
         defaultValue: true
     )
     var showMenuIcon: Bool {
@@ -26,7 +26,7 @@ class AppDefaults: ObservableObject {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "DisableSystemHUD",
+        keyPrefix + "DisableSystemHUD",
         defaultValue: true
     )
     var disableSystemHUD: Bool {

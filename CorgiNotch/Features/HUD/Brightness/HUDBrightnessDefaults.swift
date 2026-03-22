@@ -9,14 +9,17 @@ import SwiftUI
 
 class HUDBrightnessDefaults: HUDDefaultsProtocol {
     
-    internal static var PREFIX: String = "HUD_Brightness_"
+    internal static var keyPrefix: String = "HUD_Brightness_"
     
     static let shared = HUDBrightnessDefaults()
     
-    private init() {}
+    private init() {
+        style = .minimal
+        showAutoBrightnessChanges = false
+    }
     
     @PrimitiveUserDefault(
-        PREFIX + "Enabled",
+        keyPrefix + "Enabled",
         defaultValue: true
     )
     var isEnabled: Bool {
@@ -28,8 +31,8 @@ class HUDBrightnessDefaults: HUDDefaultsProtocol {
     }
     
     @CodableUserDefault(
-        PREFIX + "Style",
-        defaultValue: HUDStyle.Minimal
+        keyPrefix + "Style",
+        defaultValue: HUDStyle.minimal
     )
     var style: HUDStyle {
         didSet {
@@ -40,7 +43,7 @@ class HUDBrightnessDefaults: HUDDefaultsProtocol {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "ShowAutoBrightnessChanges",
+        keyPrefix + "ShowAutoBrightnessChanges",
         defaultValue: false
     )
     var showAutoBrightnessChanges: Bool {
@@ -52,7 +55,7 @@ class HUDBrightnessDefaults: HUDDefaultsProtocol {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "Step",
+        keyPrefix + "Step",
         defaultValue: 0.05
     )
     var step: Double {

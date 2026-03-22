@@ -76,7 +76,7 @@ class NotchUtils {
         
         notchHeight = screen.safeAreaInsets.top
         
-        if NotchDefaults.shared.heightMode == .Match_Menu_Bar {
+        if NotchDefaults.shared.heightMode == .matchMenuBar {
             notchHeight = screen.frame.maxY - screen.visibleFrame.maxY
         }
 

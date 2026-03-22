@@ -8,35 +8,31 @@
 import SwiftUI
 
 struct MinimalHUDRightView<T: HUDDefaultsProtocol>: View {
-    
+
     @ObservedObject var notchViewModel: NotchViewModel
     @ObservedObject var defaults: T
-    
+
     var hudModel: HUDPropertyModel?
-    
+
     var body: some View {
-        if let hud = hudModel, defaults.isEnabled, (defaults.style == .Minimal || notchViewModel.isExpanded) {
+        if let hud = hudModel, defaults.isEnabled, defaults.style == .minimal, !notchViewModel.isExpanded {
             MinimalHUDView(
                 notchViewModel: notchViewModel,
                 variant: .right
             ) {
-                AnimatedTextView(
-                    value: Double(hud.value * 100)
-                ) { value in
-                    Text(
-                        String(
-                            format: "%02.0f",
-                            value
-                        )
+                Text(
+                    String(
+                        format: "%02.0f",
+                        hud.value * 100
                     )
-                    .fixedSize(horizontal: true, vertical: false)
-                    .font(
-                        .title2.weight(
-                            .medium
-                        )
+                )
+                .fixedSize(horizontal: true, vertical: false)
+                .font(
+                    .title2.weight(
+                        .medium
                     )
-                    .foregroundStyle(Color.white)
-                }
+                )
+                .foregroundStyle(Color.white)
             }
         }
     }

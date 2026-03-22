@@ -24,7 +24,6 @@ class MediaKeyManager {
     private let NX_KEYTYPE_MUTE: Int32 = 7
     
     private let kCGEventSystemDefined = CGEventType(rawValue: 14)!
-    
     private init() { }
 
     public func start() {
@@ -156,10 +155,18 @@ class MediaKeyManager {
         let currentVol = AudioOutput.sharedInstance().volume * 100
         var newVol = currentVol + change
         newVol = max(0, min(100, newVol))
+
+        // Snap sub-visible residual values to a real floor so `0%` means silence.
+        if change < 0, displayedPercentage(forNormalizedValue: newVol / 100.0) == 0 {
+            newVol = 0
+        }
+
         AudioOutput.sharedInstance().volume = newVol / 100.0
-        
-        if AudioOutput.sharedInstance().isMute && change != 0 {
-             AudioOutput.sharedInstance().isMute = false
+
+        if newVol == 0 {
+            AudioOutput.sharedInstance().isMute = true
+        } else if AudioOutput.sharedInstance().isMute && change != 0 {
+            AudioOutput.sharedInstance().isMute = false
         }
     }
     
@@ -172,6 +179,21 @@ class MediaKeyManager {
         let current = Brightness.sharedInstance().brightness
         var newBright = current + change
         newBright = max(0, min(1, newBright))
+
+        // Keep the real hardware brightness aligned with the HUD's whole-percent display.
+        if change < 0, displayedPercentage(forNormalizedValue: newBright) == 0 {
+            newBright = 0
+        }
+
         Brightness.sharedInstance().brightness = newBright
+    }
+
+    private func displayedPercentage(
+        forNormalizedValue normalizedValue: Float
+    ) -> Int {
+        Int(
+            (normalizedValue * 100)
+                .rounded()
+        )
     }
 }

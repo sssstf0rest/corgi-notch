@@ -1,61 +1,51 @@
-# Task Plan: CorgiNotch Rebuild Planning
+# Task Plan: Settings Window Foreground Fix
 
 ## Goal
-Produce an implementation-ready rebuild plan for `CorgiNotch` that simplifies and atomizes the codebase, keeps all current features intact, and defines a clearer architecture and file structure without writing implementation code yet.
+Inspect the live `CorgiNotch` repository and current `docs/` state, summarize the project purpose/stack/architecture/dependencies/build flow, and fix the expanded-notch settings icon behavior so the settings window always comes to the foreground when opened.
 
 ## Current Phase
-Complete
+Phase 4 complete
 
 ## Phases
-### Phase 1: Requirements & Baseline Audit
-- [x] Capture the user's rebuild goals and constraints
-- [x] Move all planning markdown into `docs/`
-- [x] Audit the current app structure and feature surface
+### Phase 1: Live Repository Audit
+- [x] Inspect the current source tree and the markdown files under `docs/`
+- [x] Capture project purpose, tech stack, architecture, dependency structure, and build/run flow from live code
+- [x] Record repo-state findings for this session
 - **Status:** complete
 
-### Phase 2: Reference Research
-- [x] Study the linked notch projects for structural and UX patterns
-- [x] Research relevant macOS APIs and architectural constraints
-- [x] Record actionable findings in `docs/findings.md`
+### Phase 2: Settings Window Path Analysis
+- [x] Trace the expanded-notch settings icon click path
+- [x] Trace other settings entry points for shared behavior
+- [x] Identify why the settings window can open behind other windows
 - **Status:** complete
 
-### Phase 3: Target Architecture Planning
-- [x] Define a simpler feature-oriented module/file structure
-- [x] Map current features to the new architecture
-- [x] Identify shared infrastructure that should be centralized
+### Phase 3: Foreground Activation Fix
+- [x] Introduce a shared foreground-opening path for settings
+- [x] Update the expanded-notch settings icon to use the shared path
+- [x] Apply the same fix to other settings entry points that should behave consistently
 - **Status:** complete
 
-### Phase 4: Task Decomposition
-- [x] Break the rebuild into ordered implementation tasks
-- [x] Identify migration risks and validation requirements
-- [x] Produce a planning-only rebuild checklist in `docs/rebuild-plan.md`
+### Phase 4: Verification and Docs
+- [x] Build the app and confirm the settings flow compiles cleanly
+- [x] Update `docs/findings.md` and `docs/progress.md` with the implemented fix
+- [x] Summarize repository understanding and the fix result
 - **Status:** complete
-
-### Phase 5: Planning Delivery
-- [x] Review the planning docs for completeness
-- [x] Summarize the proposed rebuild direction and risks
-- [x] Deliver the planning package to the user
-- **Status:** complete
-
-## Key Questions
-1. Which parts of the current structure make the app hard to reason about or maintain?
-2. How should the app be reorganized so each feature is more atomic while preserving cross-feature behavior?
-3. Which macOS APIs and project patterns should guide the rebuild for notch windows, media state, drag/drop, AirDrop, brightness, volume, and settings control?
 
 ## Decisions Made
 | Decision | Rationale |
 |----------|-----------|
-| Keep this turn in planning mode only | The user explicitly asked for planning and no implementation |
-| Store planning markdown in `docs/` | The user explicitly wants findings, plans, and tasks kept there |
-| Preserve all current features and avoid adding new ones | The rebuild is for clarity and optimization, not scope expansion |
-| Use the already-renamed `CorgiNotch` codebase as the rebuild baseline | The forked project now builds and represents the current feature set to preserve |
-| Propose a feature-oriented architecture with explicit app-shell and infrastructure layers | This best matches the user's simplicity goal and the reference/API research |
+| Use the live source tree, not prior historical docs, as the implementation source of truth | The `docs/` folder currently only contains `progress.md`, so source inspection is required for an accurate repository model |
+| Restore `docs/task_plan.md` and `docs/findings.md` for this task | The user wants markdown progress kept in `docs/`, and the current repo no longer has the full planning set |
+| Fix the settings bug at the settings-window opening layer, not only inside the settings view | The foreground issue happens when reopening an existing settings window, so relying only on the settings scene’s `.task` is insufficient |
+| Use `NSApp.activate(ignoringOtherApps: true)` plus explicit window ordering | The first build showed `NSRunningApplication.activateIgnoringOtherApps` is deprecated and ineffective on macOS 14+, so the foreground fix should rely on the active AppKit API |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |
 |-------|---------|------------|
 
-## Notes
-- Prefer feature-oriented planning over class-by-class migration notes
-- The settings surface must retain full control over existing functionality
-- Every planning update should be written back into the markdown files under `docs/`
+## Follow-up Task: Custom Step Zero Floor Fix
+- [x] Inspect the intercepted media-key handlers for Audio and Brightness
+- [x] Identify why custom step sizes can display `0%` while the real system value remains slightly above zero
+- [x] Snap downward residual values that would round to `0%` to a real floor
+- [x] Ensure output audio is muted when the custom decrement path reaches zero
+- [x] Rebuild and record the result in `docs/`

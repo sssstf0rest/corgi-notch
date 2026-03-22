@@ -9,8 +9,8 @@ import Foundation
 
 enum HUDStyle: String, CaseIterable, Identifiable, Codable {
     var id: String { rawValue }
-    
-    case Minimal
-    case Progress
-    case Notched
+
+    case minimal = "Minimal"
+    case progress = "Progress"
+    case notched = "Notched"
 }

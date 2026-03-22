@@ -21,11 +21,8 @@ class CollapsedNotchViewModel: ObservableObject {
     
     @Published var brightnessHUD: HUDPropertyModel?
     
-    @Published var powerStatusHUD: HUDPropertyModel?
-    
     @Published var lockStatusHUD: HUDPropertyModel?
-    
-    @Published var lastPowerStatus: String = ""
+
     @Published var lastBrightness: Float = 0.0
     
     init() {
@@ -65,8 +62,6 @@ class CollapsedNotchViewModel: ObservableObject {
             self.inputAudioDeviceHUD = nil
             
             self.brightnessHUD = nil
-            
-            self.powerStatusHUD = nil
         }
     }
     
@@ -106,14 +101,6 @@ class CollapsedNotchViewModel: ObservableObject {
             self,
             selector: #selector(handleBrightnessChanges(_:)),
             name: NSNotification.Name.Brightness,
-            object: nil
-        )
-        
-        // MARK: Power Source Change Listener
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handlePowerStatusChanges),
-            name: NSNotification.Name.PowerStatus,
             object: nil
         )
         
@@ -172,7 +159,7 @@ class CollapsedNotchViewModel: ObservableObject {
     }
     
     @objc private func handleAudioInputDeviceChanges() {
-        if !HUDAudioInputDefaults.shared.isEnabled {
+        if !HUDAudioOutputDefaults.shared.isEnabled {
             return
         }
         
@@ -194,19 +181,17 @@ class CollapsedNotchViewModel: ObservableObject {
     }
     
     @objc private func handleAudioInputVolumeChanges() {
-        if !HUDAudioInputDefaults.shared.isEnabled {
+        if !HUDAudioOutputDefaults.shared.isEnabled {
             return
         }
-        
-        withAnimation {
-            self.inputAudioVolumeHUD = .init(
-                lottie: nil,
-                icon: .init(systemName: "microphone.fill"),
-                name: "Input Volume",
-                value: VolumeManager.shared.getInputVolume(),
-                timer: inputAudioVolumeHUD?.timer
-            )
-        }
+
+        self.inputAudioVolumeHUD = .init(
+            lottie: nil,
+            icon: .init(systemName: "microphone.fill"),
+            name: "Input Volume",
+            value: VolumeManager.shared.getInputVolume(),
+            timer: inputAudioVolumeHUD?.timer
+        )
         
         self.resetHUDTimer(&self.inputAudioVolumeHUD) {
             withAnimation {
@@ -241,16 +226,14 @@ class CollapsedNotchViewModel: ObservableObject {
         if !HUDAudioOutputDefaults.shared.isEnabled {
             return
         }
-        
-        withAnimation {
-            self.outputAudioVolumeHUD = .init(
-                lottie: CorgiNotch.Lotties.speaker,
-                icon: CorgiNotch.Assets.iconSpeaker,
-                name: "Output Volume",
-                value: VolumeManager.shared.getOutputVolume(),
-                timer: outputAudioVolumeHUD?.timer
-            )
-        }
+
+        self.outputAudioVolumeHUD = .init(
+            lottie: CorgiNotch.Lotties.speaker,
+            icon: CorgiNotch.Assets.iconSpeaker,
+            name: "Output Volume",
+            value: VolumeManager.shared.getOutputVolume(),
+            timer: outputAudioVolumeHUD?.timer
+        )
         
         self.resetHUDTimer(&self.outputAudioVolumeHUD) {
             withAnimation {
@@ -274,62 +257,21 @@ class CollapsedNotchViewModel: ObservableObject {
         }
         
         if !HUDBrightnessDefaults.shared.showAutoBrightnessChanges && abs(lastBrightness - newBrightness) < 0.01 {
-            withAnimation {
-                self.brightnessHUD?.value = newBrightness
-            }
-            
+            self.brightnessHUD?.value = newBrightness
             return
         }
-        
-        withAnimation {
-            self.brightnessHUD = .init(
-                lottie: CorgiNotch.Lotties.brightness,
-                icon: CorgiNotch.Assets.iconBrightness,
-                name: "Brightness",
-                value: newBrightness,
-                timer: brightnessHUD?.timer
-            )
-        }
+
+        self.brightnessHUD = .init(
+            lottie: CorgiNotch.Lotties.brightness,
+            icon: CorgiNotch.Assets.iconBrightness,
+            name: "Brightness",
+            value: newBrightness,
+            timer: brightnessHUD?.timer
+        )
         
         self.resetHUDTimer(&self.brightnessHUD) {
             withAnimation {
                 self.brightnessHUD = nil
-            }
-        }
-    }
-    
-    @objc private func handlePowerStatusChanges() {
-        if !HUDPowerDefaults.shared.showTimeRemaining {
-            return
-        }
-
-        if lastPowerStatus == PowerStatus.sharedInstance().providingSource() {
-            return
-        }
-        
-        self.lastPowerStatus = PowerStatus.sharedInstance().providingSource()
-        let isCharging = PowerStatus.sharedInstance().providingSource() == PowerStatusACPower
-        
-        var batteryLevelForIcon = Int(PowerStatus.sharedInstance().getBatteryLevel() * 100)
-        batteryLevelForIcon -= (batteryLevelForIcon % 25)
-        
-        withAnimation {
-            self.powerStatusHUD = .init(
-                lottie: nil,
-                icon: .init(
-                    systemName: isCharging
-                    ? "battery.100percent.bolt" : "battery.\(batteryLevelForIcon)percent"
-                ),
-                name: PowerStatus.sharedInstance().providingSource(),
-                value: Float(PowerStatus.sharedInstance().remainingTime()),
-                timeout: PowerStatus.sharedInstance().remainingTime().isFinite ? 3.0 : 1.0,
-                timer: powerStatusHUD?.timer
-            )
-        }
-        
-        self.resetHUDTimer(&self.powerStatusHUD) {
-            withAnimation {
-                self.powerStatusHUD = nil
             }
         }
     }

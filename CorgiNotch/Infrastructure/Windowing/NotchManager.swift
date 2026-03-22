@@ -62,7 +62,7 @@ class NotchManager {
         let shouldShowOnScreen: (NSScreen) -> Bool = { [weak self] screen in
             guard let self else { return false }
             
-            if self.notchDefaults.notchDisplayVisibility != .Custom {
+            if self.notchDefaults.notchDisplayVisibility != .custom {
                 return true
             }
             

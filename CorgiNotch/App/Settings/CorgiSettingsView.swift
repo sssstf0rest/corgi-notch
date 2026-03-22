@@ -8,26 +8,23 @@
 import SwiftUI
 
 struct CorgiSettingsView: View {
-    
+
     @Environment(\.scenePhase) var scenePhase
-    
+
     enum SettingsPages: String, CaseIterable, Identifiable {
         var id: String { rawValue }
-        
+
         case General
         case Notch
-        
+
         case ExpandedItems
         case CollapsedItems
-        
+
         case About
     }
 
-    
-    @StateObject var defaultsManager = CorgiDefaultsManager.shared
-    
     @State var selectedPage: SettingsPages = .General
-    
+
     var body: some View {
         NavigationSplitView(
             sidebar: {
@@ -36,7 +33,7 @@ struct CorgiSettingsView: View {
                 ) {
                     Section(
                         content: {
-                            NavigationLink(destination: GeneraSettingsView()) {
+                            NavigationLink(destination: GeneralSettingsView()) {
                                 HStack(spacing: 12) {
                                     SettingsIcon(icon: CorgiNotch.Assets.icGeneral, color: CorgiNotch.Colors.general)
                                     Text("General")
@@ -45,7 +42,7 @@ struct CorgiSettingsView: View {
                                 }
                             }
                             .id(SettingsPages.General)
-                            
+
                             NavigationLink(destination: NotchSettingsView()) {
                                 HStack(spacing: 12) {
                                     SettingsIcon(icon: CorgiNotch.Assets.icNotch, color: CorgiNotch.Colors.notch)
@@ -56,10 +53,8 @@ struct CorgiSettingsView: View {
                             }
                             .id(SettingsPages.Notch)
                         }
-                            
-
                     )
-                    
+
                     Section(
                         content: {
                             NavigationLink(destination: CollapsedItemsSettingsView()) {
@@ -71,7 +66,7 @@ struct CorgiSettingsView: View {
                                 }
                             }
                             .id(SettingsPages.CollapsedItems)
-                            
+
                             NavigationLink(destination: ExpandedItemsSettingsView()) {
                                 HStack(spacing: 12) {
                                     SettingsIcon(icon: CorgiNotch.Assets.icMedia, color: CorgiNotch.Colors.nowPlaying)
@@ -87,7 +82,7 @@ struct CorgiSettingsView: View {
                             Text("Notch Items")
                         }
                     )
-                    
+
                     Section {
                         NavigationLink(destination: AboutAppView()) {
                             HStack(spacing: 12) {
@@ -99,21 +94,17 @@ struct CorgiSettingsView: View {
                         }
                         .id(SettingsPages.About)
                     }
-                    
+
                 }
             },
             detail: {
-                GeneraSettingsView()
+                GeneralSettingsView()
             }
         )
         .frame(minWidth: 800, minHeight: 450)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task {
-            guard let window = NSApp.windows.first(
-                where: {
-                    $0.identifier?.rawValue == "com_apple_SwiftUI_Settings_window"
-                }
-            ) else {
+            guard let window = SettingsWindowPresenter.settingsWindow() else {
                 return
             }
 
@@ -124,8 +115,7 @@ struct CorgiSettingsView: View {
 
             window.delegate = SettingsWindowDelegate.shared
 
-            NSApp.setActivationPolicy(.regular)
-            NSApp.activate()
+            SettingsWindowPresenter.bringSettingsWindowToFront()
         }
     }
 }
@@ -135,15 +125,7 @@ class SettingsWindowDelegate: NSObject, NSWindowDelegate {
     static let shared = SettingsWindowDelegate()
 
     func windowWillClose(_ notification: Notification) {
-        // Defer the policy change to let the window finish closing
-        DispatchQueue.main.async {
-            let hasVisibleNonPanelWindow = NSApp.windows.contains {
-                $0.isVisible && !($0 is NSPanel)
-            }
-            if !hasVisibleNonPanelWindow {
-                NSApp.setActivationPolicy(.accessory)
-            }
-        }
+        NSApp.setActivationPolicy(.accessory)
     }
 }
 

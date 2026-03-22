@@ -10,30 +10,20 @@ enum ExpandedNotchItem: String, CaseIterable, Codable, Identifiable {
     var id: String {
         self.rawValue
     }
-    
-    case Mirror
-    case NowPlaying
-    case Bash
-    
+
+    case nowPlaying = "NowPlaying"
+
     var displayName: String {
         switch self {
-        case .Mirror:
-            return "Mirror"
-        case .NowPlaying:
+        case .nowPlaying:
             return "Now Playing"
-        case .Bash:
-            return "Bash Command"
         }
     }
-    
+
     var imageSystemName: String {
         switch self {
-        case .Mirror:
-            return "video.fill"
-        case .NowPlaying:
+        case .nowPlaying:
             return "music.note"
-        case .Bash:
-            return "terminal"
         }
     }
 }

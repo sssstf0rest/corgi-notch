@@ -12,7 +12,3 @@
 #import "SystemAdapters/Brightness/Brightness.h"
 #import "SystemAdapters/Audio/AudioInput.h"
 #import "SystemAdapters/Audio/AudioOutput.h"
-#import "SystemAdapters/Power/PowerStatus.h"
-
-
-extern CFTypeRef IOPSCopyPowerSourcesInfo(void);

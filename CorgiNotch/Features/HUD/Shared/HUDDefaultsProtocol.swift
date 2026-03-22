@@ -9,7 +9,7 @@ import Foundation
 
 protocol HUDDefaultsProtocol: ObservableObject {
     
-    static var PREFIX: String { get }
+    static var keyPrefix: String { get }
     
     var isEnabled: Bool { get set }
     var style: HUDStyle { get set }

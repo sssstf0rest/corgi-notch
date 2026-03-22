@@ -9,14 +9,16 @@ import SwiftUI
 
 class HUDAudioOutputDefaults: HUDDefaultsProtocol {
     
-    internal static var PREFIX: String = "HUD_Audio_Output_"
+    internal static var keyPrefix: String = "HUD_Audio_Output_"
     
     static let shared = HUDAudioOutputDefaults()
     
-    private init() {}
+    private init() {
+        style = .minimal
+    }
     
     @PrimitiveUserDefault(
-        PREFIX + "Enabled",
+        keyPrefix + "Enabled",
         defaultValue: true
     )
     var isEnabled: Bool {
@@ -28,8 +30,8 @@ class HUDAudioOutputDefaults: HUDDefaultsProtocol {
     }
     
     @CodableUserDefault(
-        PREFIX + "Style",
-        defaultValue: HUDStyle.Minimal
+        keyPrefix + "Style",
+        defaultValue: HUDStyle.minimal
     )
     var style: HUDStyle {
         didSet {
@@ -40,7 +42,7 @@ class HUDAudioOutputDefaults: HUDDefaultsProtocol {
     }
     
     @PrimitiveUserDefault(
-        PREFIX + "Step",
+        keyPrefix + "Step",
         defaultValue: 5.0
     )
     var step: Double {

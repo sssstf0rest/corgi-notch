@@ -18,7 +18,11 @@ struct SettingsControlView: View {
             notchViewModel: notchViewModel,
             icon: "gear",
             isSelected: false,
-            action: openSettings.callAsFunction
+            action: {
+                SettingsWindowPresenter.showSettings(
+                    using: openSettings.callAsFunction
+                )
+            }
         )
     }
 }

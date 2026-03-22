@@ -6,43 +6,19 @@
 //
 
 import SwiftUI
-import SwiftData
 import Sparkle
 
 @main
 struct CorgiNotchApp: App {
-    
-    @NSApplicationDelegateAdaptor(CorgiAppDelegate.self) var corgiAppDelegate
-    
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.openSettings) private var openSettings
-    
-    @StateObject private var updaterViewModel: UpdaterViewModel = .shared
-    
-    @ObservedObject private var appDefaults = AppDefaults.shared
-    
-    @State private var isMenuShown: Bool = true
-    
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([ ])
-        
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false
-        )
 
-        do {
-            return try ModelContainer(
-                for: schema,
-                configurations: [modelConfiguration]
-            )
-        } catch {
-            fatalError(
-                "Could not create ModelContainer: \(error)"
-            )
-        }
-    }()
-    
+    @NSApplicationDelegateAdaptor(CorgiAppDelegate.self) var corgiAppDelegate
+
+    @StateObject private var updaterViewModel: UpdaterViewModel = .shared
+
+    @ObservedObject private var appDefaults = AppDefaults.shared
+
+    @State private var isMenuShown: Bool = true
+
     init() {
         self._isMenuShown = .init(
             initialValue: self.appDefaults.showMenuIcon
@@ -54,7 +30,7 @@ struct CorgiNotchApp: App {
             isInserted: $isMenuShown,
             content: {
                 Text("CorgiNotch")
-                
+
                 NotchOptionsView()
             }
         ) {
@@ -68,10 +44,9 @@ struct CorgiNotchApp: App {
                 isMenuShown = newVal
             }
         }
-        
+
         Settings {
             CorgiSettingsView()
-                .modelContainer(sharedModelContainer)
         }
         .windowResizability(.contentSize)
     }

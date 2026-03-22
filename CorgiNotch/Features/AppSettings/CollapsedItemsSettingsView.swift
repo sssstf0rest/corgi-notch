@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct CollapsedItemsSettingsView: View {
-    
+
     @State private var selectedTab: Int = 0
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 12) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
                 HudTabButton(title: "Audio", icon: CorgiNotch.Assets.icAudio, tag: 0, selection: $selectedTab)
                 HudTabButton(title: "Brightness", icon: CorgiNotch.Assets.icBrightnessFill, tag: 1, selection: $selectedTab)
-                HudTabButton(title: "Power", icon: CorgiNotch.Assets.icPower, tag: 2, selection: $selectedTab)
-                HudTabButton(title: "Media", icon: CorgiNotch.Assets.icMedia, tag: 3, selection: $selectedTab)
+                HudTabButton(title: "Media", icon: CorgiNotch.Assets.icMedia, tag: 2, selection: $selectedTab)
             }
             .padding()
-            
+
             Group {
                 switch selectedTab {
                 case 0:
@@ -28,8 +27,6 @@ struct CollapsedItemsSettingsView: View {
                 case 1:
                     HUDBrightnessSettingsView()
                 case 2:
-                    HUDPowerSettingsView()
-                case 3:
                     HUDMediaSettingsView()
                 default:
                     EmptyView()
@@ -51,9 +48,9 @@ struct HudTabButton: View {
     let icon: Image
     let tag: Int
     @Binding var selection: Int
-    
+
     var isSelected: Bool { selection == tag }
-    
+
     var body: some View {
         Button {
             withAnimation(.snappy(duration: 0.2)) {
@@ -64,7 +61,7 @@ struct HudTabButton: View {
                 icon
                     .font(.system(size: 20))
                     .foregroundStyle(isSelected ? .white : .secondary)
-                
+
                 Text(title)
                     .font(.caption.weight(.medium))
                     .foregroundStyle(isSelected ? .white : .secondary)

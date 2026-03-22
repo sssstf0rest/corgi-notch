@@ -17,7 +17,7 @@ struct ProgressHUDView<T: HUDDefaultsProtocol>: View {
     var hudModel: HUDPropertyModel?
     
     var body: some View {
-        if let hud = hudModel, defaults.isEnabled, defaults.style == .Progress && !notchViewModel.isExpanded {
+        if let hud = hudModel, defaults.isEnabled, defaults.style == .progress && !notchViewModel.isExpanded {
             VStack {
                 HStack {
                     Text(
@@ -38,18 +38,14 @@ struct ProgressHUDView<T: HUDDefaultsProtocol>: View {
                     .font(.title3.bold())
                     .opacity(0)
                     .overlay {
-                        AnimatedTextView(
-                            value: Double(hud.value * 100)
-                        ) { value in
-                            Text(
-                                String(
-                                    format: "%02.0f %",
-                                    value
-                                )
+                        Text(
+                            String(
+                                format: "%02.0f %%",
+                                hud.value * 100
                             )
-                            .font(.title3.bold())
-                            .foregroundStyle(Color.white)
-                        }
+                        )
+                        .font(.title3.bold())
+                        .foregroundStyle(Color.white)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }

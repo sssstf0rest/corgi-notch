@@ -19,6 +19,10 @@ final class HUDAudioSettingsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
+        let unifiedIsEnabled = HUDAudioOutputDefaults.shared.isEnabled || HUDAudioInputDefaults.shared.isEnabled
+        HUDAudioOutputDefaults.shared.isEnabled = unifiedIsEnabled
+        HUDAudioInputDefaults.shared.isEnabled = unifiedIsEnabled
+        
         self.localVolumeStep = HUDAudioOutputDefaults.shared.step
         
         $localVolumeStep
@@ -37,5 +41,14 @@ final class HUDAudioSettingsViewModel: ObservableObject {
                 self.outputDefaults.step = newValue
             }
         }
+    }
+    
+    var isAudioHUDEnabled: Bool {
+        outputDefaults.isEnabled
+    }
+    
+    func setAudioHUDEnabled(_ isEnabled: Bool) {
+        outputDefaults.isEnabled = isEnabled
+        inputDefaults.isEnabled = isEnabled
     }
 }
