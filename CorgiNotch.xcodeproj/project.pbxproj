@@ -340,7 +340,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-					CURRENT_PROJECT_VERSION = 223;
+				CURRENT_PROJECT_VERSION = 224;
 				DEVELOPMENT_TEAM = 828K5SP495;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -362,11 +362,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-					MARKETING_VERSION = 2.2.3;
+				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.corginotch.CorgiNotch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPARKLE_APPCAST_URL = "https://sssstf0rest.github.io/corgi-notch/appcast.xml";
-					SPARKLE_PUBLIC_ED_KEY = "xkUoX+U9YR9Uw+e6tiyvITFh+/hw5s0MMNK5PT0nSCA=";
+				SPARKLE_PUBLIC_ED_KEY = "xkUoX+U9YR9Uw+e6tiyvITFh+/hw5s0MMNK5PT0nSCA=";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CorgiNotch/Infrastructure/CorgiNotch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -385,7 +385,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-					CURRENT_PROJECT_VERSION = 223;
+				CURRENT_PROJECT_VERSION = 224;
 				DEVELOPMENT_TEAM = 828K5SP495;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -407,11 +407,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-					MARKETING_VERSION = 2.2.3;
+				MARKETING_VERSION = 2.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.corginotch.CorgiNotch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPARKLE_APPCAST_URL = "https://sssstf0rest.github.io/corgi-notch/appcast.xml";
-					SPARKLE_PUBLIC_ED_KEY = "xkUoX+U9YR9Uw+e6tiyvITFh+/hw5s0MMNK5PT0nSCA=";
+				SPARKLE_PUBLIC_ED_KEY = "xkUoX+U9YR9Uw+e6tiyvITFh+/hw5s0MMNK5PT0nSCA=";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CorgiNotch/Infrastructure/CorgiNotch-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

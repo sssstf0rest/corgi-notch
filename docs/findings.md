@@ -156,3 +156,11 @@
   - before re-signing, the app failed immediately with the `dyld` / `MediaRemoteAdapter.framework` load error
   - after re-signing the extracted app with the new entitlement, the `dyld` failure disappeared and the process stayed alive
 - I could not run a fresh archive build in this sandbox because network-restricted package resolution blocked `xcodebuild`, so final end-to-end verification still needs a local archive on your machine.
+
+## Release DMG Packaging
+- The repo previously only had a Sparkle-oriented zip builder, which is correct for in-app updates but not ideal for the human-facing GitHub release page.
+- A separate DMG helper is the right shape here because Sparkle still requires a `.zip`, while users often expect a drag-install disk image with the app plus an `Applications` shortcut.
+- The new `build-release-dmg.sh` mirrors the existing archive build inputs, performs the same archive + `codesign --verify` step, stages:
+  - `CorgiNotch.app`
+  - `Applications` symlink
+- It then creates a compressed `.dmg` with `hdiutil`.

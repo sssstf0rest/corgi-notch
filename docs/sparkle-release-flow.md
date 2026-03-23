@@ -103,10 +103,10 @@ On a Mac configured for release signing, build the archive:
 ./scripts/release/build-release-archive.sh
 ```
 
-The script creates a zip archive like:
+The script creates a Sparkle archive like:
 
 ```text
-build/sparkle-release/CorgiNotch-2.2.3.zip
+build/sparkle-release/CorgiNotch-2.2.4.zip
 ```
 
 Notes:
@@ -116,17 +116,43 @@ Notes:
 - If you notarize release artifacts in your distribution process, do that before uploading the final zip.
 - If you ever rotate the Sparkle key, you can temporarily override the embedded key with `SPARKLE_PUBLIC_ED_KEY=...`.
 
-### 3. Publish a GitHub Release
+### 3. Build a DMG for the GitHub Release Page
+
+If you want a user-friendly drag-install artifact, build the DMG too:
+
+```bash
+./scripts/release/build-release-dmg.sh
+```
+
+The DMG contains:
+
+- `CorgiNotch.app`
+- an `Applications` shortcut for drag-install
+
+The script creates a disk image like:
+
+```text
+build/sparkle-release/CorgiNotch-2.2.4.dmg
+```
+
+Notes:
+
+- The DMG build also performs a fresh archive build and `codesign --verify`.
+- Sparkle still requires the `.zip` artifact; the DMG is for the human-facing GitHub release page.
+- It is fine to attach both the `.zip` and `.dmg` to the same GitHub release as long as there is exactly one `CorgiNotch*.zip`.
+
+### 4. Publish a GitHub Release
 
 Create a GitHub release with:
 
 - a tag matching the version you want to publish
 - exactly one attached archive named `CorgiNotch*.zip`
+- optionally a matching `CorgiNotch*.dmg`
 - release notes in the GitHub release body
 
 The release body is mirrored into a matching markdown file for Sparkle release notes.
 
-### 4. Let the Workflow Publish the Appcast
+### 5. Let the Workflow Publish the Appcast
 
 When the release is published, `.github/workflows/publish-sparkle-appcast.yml`:
 
@@ -146,6 +172,8 @@ After that, the in-app **Check for Updates** action can discover the new release
 
 - `scripts/release/build-release-archive.sh`
   - maintainer helper for building the release zip
+- `scripts/release/build-release-dmg.sh`
+  - maintainer helper for building a release DMG with the app bundle and an `Applications` shortcut
 - `scripts/release/fetch-sparkle-tools.sh`
   - downloads the Sparkle distribution tools matching the repo’s pinned Sparkle version
 - `.github/workflows/publish-sparkle-appcast.yml`

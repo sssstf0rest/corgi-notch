@@ -86,6 +86,9 @@ CorgiNotch/
 ## Changelog
 
 ### 2026-03-23
+- Bumped the project version for the first official release from `2.2.3 (223)` to `2.2.4 (224)`
+- Added `scripts/release/build-release-dmg.sh` to generate a `.dmg` installer containing `CorgiNotch.app` and an `Applications` shortcut
+- Updated the Sparkle release documentation to distinguish the required Sparkle `.zip` from the optional user-facing `.dmg`
 - Bumped the project version for the next Sparkle update test release from `2.2.2 (222)` to `2.2.3 (223)`
 - Fixed standalone packaged-app launch failure after the release build/archive flow
 - Identified two build-level issues in the generated `.app`: `MediaRemoteAdapter.framework` was rejected by hardened runtime library validation, and the bundle was still marked `LSBackgroundOnly`
@@ -113,7 +116,7 @@ CorgiNotch/
 - Replaced the deprecated foreground activation path with `NSApp.activate(ignoringOtherApps: true)` plus explicit settings-window ordering and revalidated with a successful `xcodebuild`
 - Fixed custom Audio/Brightness decrement floors so non-default step sizes no longer leave a faint non-zero system value when the HUD reaches `0%`
 - Output audio now hard-mutes at the custom-step zero floor, and brightness snaps sub-visible residual values to a real zero
-- Rewrote `README.md` to accurately present CorgiNotch as the Thaw-maintained continuation fork of MewNotch and removed unrelated placeholder project text
+- Rewrote `README.md` to accurately present CorgiNotch as the `sssstf0rest`-maintained continuation fork of MewNotch and removed unrelated placeholder project text
 - Audited the current Sparkle setup and confirmed the updater is wired in code but blocked by a placeholder feed URL and missing public key
 - Added build-setting-backed Sparkle configuration so release builds embed the appcast URL and public EdDSA key instead of placeholder values
 - Added `scripts/release/build-release-archive.sh` and `scripts/release/fetch-sparkle-tools.sh` for maintainer-side Sparkle release preparation

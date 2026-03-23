@@ -94,3 +94,9 @@ Phase 4 complete
 - [x] Correct the app bundle mode so packaged builds are emitted as an agent app, not a background-only app
 - [x] Update entitlements/build settings so packaged `.app` bundles can launch outside Xcode
 - [ ] Rebuild a fresh archive locally and confirm the resulting standalone `.app` launches by double-clicking
+
+## Follow-up Task: Official Release Packaging
+- [x] Add a maintainer script for building a release DMG that contains the app and an `Applications` shortcut
+- [x] Keep the Sparkle zip release flow intact and document the distinction between the `.zip` and `.dmg` artifacts
+- [x] Bump the project version for the first official release from `2.2.3 (223)` to `2.2.4 (224)`
+- [ ] Run the new DMG build locally and verify the mounted disk image contents and install flow

@@ -32,7 +32,7 @@
 
 > [!NOTE]
 > **CorgiNotch** is a fork of [MewNotch](https://github.com/monuk7735/mew-notch) by [monuk7735](https://github.com/monuk7735).
-> The original project appears to be inactive, so this project continues the vision of MewNotch by keeping the project alive, fixing bugs, ensuring compatibility with the latest macOS releases, and eventually implementing the remaining roadmap features.
+> The original project appears to be inactive, so this fork is maintained by [sssstf0rest](https://github.com/sssstf0rest) to keep the project alive, fix bugs, ensure compatibility with the latest macOS releases, and eventually implement the remaining roadmap features.
 
 ## Features
 
@@ -137,7 +137,7 @@ This project is licensed under the [GPLv3 License](LICENSE).
 ## Acknowledgments
 
 - Forked from [MewNotch](https://github.com/monuk7735/mew-notch) by [monuk7735](https://github.com/monuk7735).
-- Thaw continues the project with a focus on maintenance, bug fixes, and modern macOS compatibility.
+- Maintained by [sssstf0rest](https://github.com/sssstf0rest) as an active continuation focused on maintenance, bug fixes, and modern macOS compatibility.
 - Built with Swift, SwiftUI, AppKit, and Objective-C system bridges.
 
 Thanks to the projects and authors whose code or ideas helped shape this work:
