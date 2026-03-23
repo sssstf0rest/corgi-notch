@@ -86,6 +86,12 @@ CorgiNotch/
 ## Changelog
 
 ### 2026-03-23
+- Bumped the project version for the next Sparkle update test release from `2.2.2 (222)` to `2.2.3 (223)`
+- Fixed standalone packaged-app launch failure after the release build/archive flow
+- Identified two build-level issues in the generated `.app`: `MediaRemoteAdapter.framework` was rejected by hardened runtime library validation, and the bundle was still marked `LSBackgroundOnly`
+- Updated `CorgiNotch.entitlements` to allow loading the embedded `MediaRemoteAdapter.framework` in ad hoc/local release builds via `com.apple.security.cs.disable-library-validation`
+- Replaced `LSBackgroundOnly` with `LSUIElement` in Debug and Release so packaged builds behave like a normal agent/menu-bar app instead of a background-only process
+- Verified the root cause by extracting the existing release zip, reproducing the `dyld` failure, then re-signing the app with the new entitlement and confirming the `MediaRemoteAdapter.framework` load error disappeared
 - Fixed the lock-screen toggle re-enable regression so `Show on Lock Screen` can be turned back on after being turned off
 - Restored the correct window ordering flow in `NotchManager`: front the panel first, then move it into the lock-screen space
 - Verified the re-enable fix with `xcodebuild -project CorgiNotch.xcodeproj -scheme CorgiNotch -configuration Debug -derivedDataPath /tmp/corgi-notch-lockscreen-toggle CODE_SIGNING_ALLOWED=NO build`

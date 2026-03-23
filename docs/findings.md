@@ -140,3 +140,19 @@
   - remove eager startup from `UpdaterViewModel.init()`
   - observe `canCheckForUpdates` directly
   - only mirror Sparkle's disabled state after the updater has actually been started by a user-initiated action
+
+## Packaged App Launch Failure
+- The release archive script itself is not the launch blocker; the packaged `.app` was failing during process startup.
+- Reproducing the launch path from an extracted `CorgiNotch-2.2.1.zip` showed `dyld` aborting before the app could present UI:
+  - `Library not loaded: @rpath/MediaRemoteAdapter.framework/...`
+  - `code signature ... not valid for use in process: mapping process and mapped file (non-platform) have different Team IDs`
+- The app bundle was signed ad hoc with hardened runtime enabled, and the embedded `MediaRemoteAdapter.framework` was also ad hoc. Without the library-validation exception, macOS rejected the framework load in the packaged app.
+- Separately, the generated `Info.plist` still contained `LSBackgroundOnly = true`, which is the wrong app mode for a visible menu-bar / settings app and makes Finder launches behave like a background process instead of a normal agent app.
+
+## Packaged App Launch Fix
+- `CorgiNotch.entitlements` now includes `com.apple.security.cs.disable-library-validation = true`, which allows the packaged app to load the embedded `MediaRemoteAdapter.framework` in local/ad hoc builds created by the release script.
+- The Xcode target no longer emits `LSBackgroundOnly`; it now emits `LSUIElement = YES` for Debug and Release so the packaged app behaves like a menu-bar agent app.
+- I validated the root cause directly against the extracted release zip:
+  - before re-signing, the app failed immediately with the `dyld` / `MediaRemoteAdapter.framework` load error
+  - after re-signing the extracted app with the new entitlement, the `dyld` failure disappeared and the process stayed alive
+- I could not run a fresh archive build in this sandbox because network-restricted package resolution blocked `xcodebuild`, so final end-to-end verification still needs a local archive on your machine.

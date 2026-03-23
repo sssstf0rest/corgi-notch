@@ -86,3 +86,11 @@ Phase 4 complete
 - [x] Confirm the regression comes from moving a newly recreated panel to the lock-screen space before ordering it front
 - [x] Restore the original order so the panel is realized before `moveToLockScreen` runs
 - [x] Rebuild and confirm the lock-screen path compiles cleanly
+
+## Follow-up Task: Packaged App Launch Failure
+- [x] Inspect the release build/archive flow and compare it with the working Xcode run path
+- [x] Reproduce the packaged-app startup failure from the generated release zip
+- [x] Confirm the main launch blocker is hardened-runtime library validation against the embedded `MediaRemoteAdapter.framework`
+- [x] Correct the app bundle mode so packaged builds are emitted as an agent app, not a background-only app
+- [x] Update entitlements/build settings so packaged `.app` bundles can launch outside Xcode
+- [ ] Rebuild a fresh archive locally and confirm the resulting standalone `.app` launches by double-clicking
