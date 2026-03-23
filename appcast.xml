@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>CorgiNotch</title>
+        <item>
+            <title>2.2.0</title>
+            <pubDate>Mon, 23 Mar 2026 06:23:11 +0000</pubDate>
+            <sparkle:version>220</sparkle:version>
+            <sparkle:shortVersionString>2.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://sssstf0rest.github.io/corgi-notch/CorgiNotch-2.2.0.zip" length="5436388" type="application/octet-stream" sparkle:edSignature="In33oorIOi14dSlQEWNMedGQ38Px3eScs1BNdSBAXjape7EFvU1QDJJ0zjzZh+ykVOe3G0vhR6DpjCyHYNZdCA=="/>
+        </item>
+    </channel>
+</rss>
