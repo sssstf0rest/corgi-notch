@@ -3,6 +3,17 @@
     <channel>
         <title>CorgiNotch</title>
         <item>
+            <title>2.2.3</title>
+            <pubDate>Mon, 23 Mar 2026 15:03:25 +0000</pubDate>
+            <sparkle:version>223</sparkle:version>
+            <sparkle:shortVersionString>2.2.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://sssstf0rest.github.io/corgi-notch/CorgiNotch-2.2.3.zip" length="5442645" type="application/octet-stream" sparkle:edSignature="XhXFpyjqo5V/GkiWeDjH383INfnDJhm3hdc849WTuGWIjoXi6wAah62qWYihQ5lB7ctkx7ATcynhsUY5hGp0CQ=="/>
+            <sparkle:deltas>
+                <enclosure url="https://sssstf0rest.github.io/corgi-notch/CorgiNotch223-220.delta" sparkle:deltaFrom="220" length="312438" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="860336" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="8Xp//1/KSLJ8w23Dcuq2adWXWbn0NApWQxBKZNhOpa8RmUVBXSq7SKYYQOHpOi0RspAI08GPt6SmNK8FBBv2BA=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
             <title>2.2.0</title>
             <pubDate>Mon, 23 Mar 2026 06:23:11 +0000</pubDate>
             <sparkle:version>220</sparkle:version>
