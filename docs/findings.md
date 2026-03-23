@@ -103,3 +103,4 @@
 - The current repo has no `.github/workflows` directory yet, so Sparkle publishing automation must be added from scratch.
 - The implemented workflow has to download the new release archive into a temporary directory before copying it into `gh-pages`; otherwise older `CorgiNotch*.zip` files already stored in `gh-pages` would break the "exactly one release asset" validation on later releases.
 - A local verification build confirmed the processed app bundle now embeds the configured `SUFeedURL` and `SUPublicEDKey`, so the new build-setting wiring for Sparkle is functioning.
+- GitHub's `macos-15` runner still uses the system Bash 3.2 shell, so workflow steps cannot rely on Bash 4 features like `mapfile`; the release-archive step must use portable text-file counting instead.

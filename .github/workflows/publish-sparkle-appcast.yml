@@ -73,22 +73,26 @@ jobs:
         run: |
           SITE_DIR="$RUNNER_TEMP/appcast-site"
           RELEASE_DIR="$RUNNER_TEMP/release-asset"
+          ARCHIVE_LIST_PATH="$RUNNER_TEMP/release_archives.txt"
 
           rm -rf "$RELEASE_DIR"
           mkdir -p "$RELEASE_DIR"
 
           gh release download "$RELEASE_TAG" --pattern "CorgiNotch*.zip" --dir "$RELEASE_DIR"
 
-          mapfile -t ARCHIVES < <(find "$RELEASE_DIR" -maxdepth 1 -type f -name 'CorgiNotch*.zip' | sort)
+          find "$RELEASE_DIR" -maxdepth 1 -type f -name 'CorgiNotch*.zip' | sort > "$ARCHIVE_LIST_PATH"
+          ARCHIVE_COUNT="$(wc -l < "$ARCHIVE_LIST_PATH" | tr -d '[:space:]')"
 
-          if [[ "${#ARCHIVES[@]}" -ne 1 ]]; then
-            echo "Expected exactly one CorgiNotch*.zip asset in release ${RELEASE_TAG}, found ${#ARCHIVES[@]}." >&2
+          if [[ "$ARCHIVE_COUNT" -ne 1 ]]; then
+            echo "Expected exactly one CorgiNotch*.zip asset in release ${RELEASE_TAG}, found ${ARCHIVE_COUNT}." >&2
             exit 1
           fi
 
-          cp "${ARCHIVES[0]}" "$SITE_DIR/"
+          ARCHIVE_PATH="$(sed -n '1p' "$ARCHIVE_LIST_PATH")"
 
-          printf '%s\n' "$SITE_DIR/$(basename "${ARCHIVES[0]}")" > "$RUNNER_TEMP/release_archive_path"
+          cp "$ARCHIVE_PATH" "$SITE_DIR/"
+
+          printf '%s\n' "$SITE_DIR/$(basename "$ARCHIVE_PATH")" > "$RUNNER_TEMP/release_archive_path"
 
       - name: Verify archive Sparkle metadata
         run: |
