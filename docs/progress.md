@@ -85,6 +85,12 @@ CorgiNotch/
 
 ## Changelog
 
+### 2026-03-23
+- Bumped the project version for the next Sparkle update test release from `2.2.1 (221)` to `2.2.2 (222)`
+- Fixed the `Show on Lock Screen` toggle so disabling it actually keeps the notch off the lock screen
+- The fix now configures `canBecomeVisibleWithoutLogin` from the setting, removes the disabled path from the dedicated notch space, and hides/restores windows on lock/unlock notifications
+- Verified the change with `xcodebuild -project CorgiNotch.xcodeproj -scheme CorgiNotch -configuration Debug -derivedDataPath /tmp/corgi-notch-lockscreen CODE_SIGNING_ALLOWED=NO build`
+
 ### 2026-03-22
 - Bumped the project version for the next Sparkle update test release from `2.2.0 (220)` to `2.2.1 (221)`
 - Removed "Show in Dock" feature (dock icon now only appears while settings window is open)

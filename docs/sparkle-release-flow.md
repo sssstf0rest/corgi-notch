@@ -106,7 +106,7 @@ On a Mac configured for release signing, build the archive:
 The script creates a zip archive like:
 
 ```text
-build/sparkle-release/CorgiNotch-2.2.1.zip
+build/sparkle-release/CorgiNotch-2.2.2.zip
 ```
 
 Notes:

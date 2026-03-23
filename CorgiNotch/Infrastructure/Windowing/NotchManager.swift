@@ -17,6 +17,7 @@ class NotchManager {
     var windows: [NSScreen: NSWindow] = [:]
     
     private var monitorTask: Task<Void, Never>?
+    private var isScreenLocked = false
     
     private init() {
         monitorTask = Task { @MainActor in
@@ -27,11 +28,13 @@ class NotchManager {
         }
         
         addListenerForScreenUpdates()
+        addLockStateListeners()
     }
     
     deinit {
         monitorTask?.cancel()
         removeListenerForScreenUpdates()
+        removeLockStateListeners()
     }
     
     @MainActor
@@ -73,6 +76,7 @@ class NotchManager {
             if killAllWindows || !NSScreen.screens.contains(
                 where: { $0 == screen}
             ) || !shouldShowOnScreen(screen) {
+                NotchSpaceManager.shared.notchSpace.windows.remove(window)
                 window.close()
                 
                 windows.removeValue(
@@ -107,22 +111,30 @@ class NotchManager {
                 
                 panel.contentView = view
             }
+
+            if let corgiPanel = panel as? CorgiPanel {
+                corgiPanel.setShownOnLockScreen(
+                    notchDefaults.shownOnLockScreen
+                )
+            }
+            
+            NotchSpaceManager.shared.notchSpace.windows.remove(panel)
             
             panel.setFrame(
                 screen.frame,
                 display: true
             )
-            
-            panel.orderFrontRegardless()
-            
+
             windows[screen] = panel
             
-            if addToSeparateSpace {
-                if notchDefaults.shownOnLockScreen {
-                    WindowManager.shared?.moveToLockScreen(panel)
-                } else {
-                    NotchSpaceManager.shared.notchSpace.windows.insert(panel)
-                }
+            if addToSeparateSpace && notchDefaults.shownOnLockScreen {
+                WindowManager.shared?.moveToLockScreen(panel)
+            }
+            
+            if isScreenLocked && !notchDefaults.shownOnLockScreen {
+                panel.orderOut(nil)
+            } else {
+                panel.orderFrontRegardless()
             }
         }
         
@@ -144,5 +156,44 @@ class NotchManager {
     
     func removeListenerForScreenUpdates() {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func addLockStateListeners() {
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(screenLocked),
+            name: NSNotification.Name("com.apple.screenIsLocked"),
+            object: nil
+        )
+        
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(screenUnlocked),
+            name: NSNotification.Name("com.apple.screenIsUnlocked"),
+            object: nil
+        )
+    }
+    
+    func removeLockStateListeners() {
+        DistributedNotificationCenter.default().removeObserver(self)
+    }
+    
+    @objc private func screenLocked() {
+        isScreenLocked = true
+        
+        guard !notchDefaults.shownOnLockScreen else { return }
+        
+        windows.values.forEach { window in
+            window.orderOut(nil)
+        }
+    }
+    
+    @objc private func screenUnlocked() {
+        let shouldRefresh = isScreenLocked && !notchDefaults.shownOnLockScreen
+        isScreenLocked = false
+        
+        guard shouldRefresh else { return }
+        
+        refreshNotches()
     }
 }

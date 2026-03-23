@@ -110,3 +110,16 @@
 - The durable fix is to commit the public EdDSA key into the Xcode build settings and start Sparkle lazily via `SPUUpdater.startUpdater(_:)`, logging launch-time failures silently and only surfacing an alert if the user explicitly requests an update check.
 - The disabled `Check for Updates` action after launch was a SwiftUI state propagation bug: the view model exposed `canCheckForUpdates` as a computed property, so the UI never observed Sparkle's availability change after the updater started on the next run loop.
 - The version label path is more reliable when it resolves once from `Bundle.main.object(forInfoDictionaryKey:)` and stores the resulting marketing/build string in the shared updater view model.
+
+## Lock Screen Toggle Findings
+- The `Show on Lock Screen` toggle is already persisted in `NotchDefaults` and the settings page correctly forces a full notch-window refresh when it changes.
+- The actual bug lives in `NotchManager` and `CorgiPanel`: notch panels were always created with `canBecomeVisibleWithoutLogin = true`, so they remained eligible to appear on the lock screen even when the toggle was off.
+- The previous "off" branch also inserted panels into `NotchSpaceManager`'s dedicated max-level space instead of restoring ordinary desktop behavior, which kept them tied to a special always-on-top space rather than explicitly keeping them off the lock screen.
+- A robust fix should do three things together:
+  - configure each panel's login-window visibility from `shownOnLockScreen`
+  - stop routing the disabled case into the dedicated notch space
+  - explicitly hide the windows on the distributed `com.apple.screenIsLocked` notification and refresh them on unlock
+
+## Lock Screen Toggle Verification
+- `xcodebuild -project CorgiNotch.xcodeproj -scheme CorgiNotch -configuration Debug -derivedDataPath /tmp/corgi-notch-lockscreen CODE_SIGNING_ALLOWED=NO build` succeeded after the windowing fix.
+- I did not run a live lock/unlock cycle from this environment, so the remaining validation is on-device: toggle `Show on Lock Screen` off, lock the Mac, and confirm the notch no longer appears until the screen is unlocked again.

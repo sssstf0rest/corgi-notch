@@ -66,3 +66,10 @@ Phase 4 complete
 - [x] Rebuild and confirm the processed app bundle embeds the feed URL and public key correctly
 - [x] Publish updater availability changes so the update action is not stuck disabled after launch
 - [x] Reconfirm the About page version source resolves the bumped bundle version
+
+## Follow-up Task: Lock Screen Toggle Fix
+- [x] Inspect the `Show on Lock Screen` setting path from settings UI into the notch window manager
+- [x] Confirm the bug is caused by panel/window configuration, not missing settings persistence
+- [x] Make notch panels honor the toggle when deciding login-window visibility and lock-screen placement
+- [x] Hide the notch while locked when the toggle is off, then refresh it after unlock
+- [x] Rebuild and confirm the windowing changes compile cleanly

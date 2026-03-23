@@ -45,6 +45,10 @@ class CorgiPanel: NSPanel {
         acceptsMouseMovedEvents = true
     }
 
+    func setShownOnLockScreen(_ shownOnLockScreen: Bool) {
+        canBecomeVisibleWithoutLogin = shownOnLockScreen
+    }
+
     override var canBecomeKey: Bool {
         // Allow becoming key so SwiftUI drop destinations receive events
         true
