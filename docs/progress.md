@@ -86,6 +86,7 @@ CorgiNotch/
 ## Changelog
 
 ### 2026-03-22
+- Bumped the project version for the next Sparkle update test release from `2.2.0 (220)` to `2.2.1 (221)`
 - Removed "Show in Dock" feature (dock icon now only appears while settings window is open)
 - Fixed settings window close not hiding dock icon
 - Restored `docs/task_plan.md` and `docs/findings.md` for the settings-window foreground fix session

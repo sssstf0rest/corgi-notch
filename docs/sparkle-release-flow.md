@@ -106,7 +106,7 @@ SPARKLE_PUBLIC_ED_KEY="your_public_ed25519_key" \
 The script creates a zip archive like:
 
 ```text
-build/sparkle-release/CorgiNotch-2.2.0.zip
+build/sparkle-release/CorgiNotch-2.2.1.zip
 ```
 
 Notes:
