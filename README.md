@@ -11,15 +11,15 @@
 
 <div align="center">
 
-[![GitHub License](https://img.shields.io/github/license/sssstf0rest/corgi-notch)](LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/sssstf0rest/corgi-notch/total.svg)](https://github.com/sssstf0rest/corgi-notch/releases)
-[![Issues](https://img.shields.io/github/issues/sssstf0rest/corgi-notch.svg)](https://github.com/sssstf0rest/corgi-notch/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/sssstf0rest/corgi-notch.svg)](https://github.com/sssstf0rest/corgi-notch/pulls)
+[![GitHub License](https://img.shields.io/github/license/sssstf0rest/CorgiNotch)](LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/sssstf0rest/CorgiNotch/total.svg)](https://github.com/sssstf0rest/CorgiNotch/releases)
+[![Issues](https://img.shields.io/github/issues/sssstf0rest/CorgiNotch.svg)](https://github.com/sssstf0rest/CorgiNotch/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/sssstf0rest/CorgiNotch.svg)](https://github.com/sssstf0rest/CorgiNotch/pulls)
 [![macOS Version](https://img.shields.io/badge/macOS-14.0%2B-blue.svg)](https://www.apple.com/macos/)
 
 <br/>
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Latest%20Release-black?style=for-the-badge&logo=apple)](https://github.com/sssstf0rest/corgi-notch/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download-Latest%20Release-black?style=for-the-badge&logo=apple)](https://github.com/sssstf0rest/CorgiNotch/releases)
 
 <br/>
 
@@ -51,7 +51,7 @@
 
 ### Manual Download
 
-1. Download the latest release from [GitHub Releases](https://github.com/sssstf0rest/corgi-notch/releases).
+1. Download the latest release from [GitHub Releases](https://github.com/sssstf0rest/CorgiNotch/releases).
 2. Move `CorgiNotch.app` to the `/Applications` folder.
 3. Launch the app and grant the required permissions if prompted.
 
@@ -60,8 +60,8 @@
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/sssstf0rest/corgi-notch.git
-cd corgi-notch
+git clone https://github.com/sssstf0rest/CorgiNotch.git
+cd CorgiNotch
 ```
 
 2. Open `CorgiNotch.xcodeproj` in a recent version of Xcode.

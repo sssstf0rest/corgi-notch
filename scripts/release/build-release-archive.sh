@@ -22,7 +22,7 @@ SPARKLE_PUBLIC_ED_KEY="${SPARKLE_PUBLIC_ED_KEY:-$(
         }
     ' "$PROJECT_PATH/project.pbxproj"
 )}"
-SPARKLE_APPCAST_URL="${SPARKLE_APPCAST_URL:-https://sssstf0rest.github.io/corgi-notch/appcast.xml}"
+SPARKLE_APPCAST_URL="${SPARKLE_APPCAST_URL:-https://sssstf0rest.github.io/CorgiNotch/appcast.xml}"
 
 if [[ -z "$SPARKLE_PUBLIC_ED_KEY" ]]; then
     echo "Unable to determine SPARKLE_PUBLIC_ED_KEY. Set it in the environment or Xcode project before building a release archive." >&2

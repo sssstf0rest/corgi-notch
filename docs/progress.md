@@ -86,6 +86,9 @@ CorgiNotch/
 ## Changelog
 
 ### 2026-03-23
+- Updated hard-coded GitHub and GitHub Pages URLs after renaming the repository from `corgi-notch` to `CorgiNotch`
+- Aligned the Sparkle appcast URL in Xcode build settings, release scripts, workflow config, and repo documentation with the new Pages path
+- Updated the README GitHub links and clone instructions to use `sssstf0rest/CorgiNotch`
 - Bumped the project version for the first official release from `2.2.3 (223)` to `2.2.4 (224)`
 - Added `scripts/release/build-release-dmg.sh` to generate a `.dmg` installer containing `CorgiNotch.app` and an `Applications` shortcut
 - Updated the Sparkle release documentation to distinguish the required Sparkle `.zip` from the optional user-facing `.dmg`

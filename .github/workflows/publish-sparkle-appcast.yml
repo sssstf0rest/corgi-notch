@@ -20,7 +20,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       RELEASE_TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.release_tag }}
       RELEASE_BODY: ${{ github.event_name == 'release' && github.event.release.body || '' }}
-      SPARKLE_APPCAST_URL: https://sssstf0rest.github.io/corgi-notch/appcast.xml
+      SPARKLE_APPCAST_URL: https://sssstf0rest.github.io/CorgiNotch/appcast.xml
       SPARKLE_PUBLIC_ED_KEY: ${{ vars.SPARKLE_PUBLIC_ED_KEY }}
       SPARKLE_PRIVATE_ED_KEY_BASE64: ${{ secrets.SPARKLE_PRIVATE_ED_KEY_BASE64 }}
       PAGES_BRANCH: gh-pages

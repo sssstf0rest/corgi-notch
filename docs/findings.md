@@ -164,3 +164,13 @@
   - `CorgiNotch.app`
   - `Applications` symlink
 - It then creates a compressed `.dmg` with `hdiutil`.
+
+## Repository Rename Follow-up
+- Renaming the GitHub repository affects more than README links because the Sparkle feed URL is tied to the GitHub Pages project path.
+- In this repo, the rename-sensitive locations are:
+  - `SPARKLE_APPCAST_URL` in Xcode build settings
+  - release helper script defaults
+  - the Sparkle publishing workflow environment
+  - README badges, release links, and clone instructions
+  - Sparkle setup documentation
+- These references need to use the new repository path consistently; otherwise release builds can embed the wrong feed URL and Sparkle update checks will point at the old Pages site.

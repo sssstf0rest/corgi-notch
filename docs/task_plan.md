@@ -100,3 +100,9 @@ Phase 4 complete
 - [x] Keep the Sparkle zip release flow intact and document the distinction between the `.zip` and `.dmg` artifacts
 - [x] Bump the project version for the first official release from `2.2.3 (223)` to `2.2.4 (224)`
 - [ ] Run the new DMG build locally and verify the mounted disk image contents and install flow
+
+## Follow-up Task: Repository Rename
+- [x] Find all hard-coded GitHub repository and GitHub Pages URLs tied to the old `corgi-notch` name
+- [x] Update the Sparkle feed URL in build settings, release scripts, and workflow configuration
+- [x] Update README and release docs links to `sssstf0rest/CorgiNotch`
+- [ ] Re-run the Sparkle publishing flow after the rename and confirm the new Pages URL serves `appcast.xml`

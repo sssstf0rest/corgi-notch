@@ -5,7 +5,7 @@ This repository uses Sparkle for in-app updates and GitHub Pages as the update f
 ## Overview
 
 - `CorgiNotch.app` embeds a fixed Sparkle feed URL:
-  - `https://sssstf0rest.github.io/corgi-notch/appcast.xml`
+  - `https://sssstf0rest.github.io/CorgiNotch/appcast.xml`
 - GitHub Releases remain the human-facing release page.
 - The `gh-pages` branch stores Sparkle update assets:
   - `appcast.xml`
@@ -27,7 +27,7 @@ In the GitHub repository settings:
 The resulting public feed URL should be:
 
 ```text
-https://sssstf0rest.github.io/corgi-notch/appcast.xml
+https://sssstf0rest.github.io/CorgiNotch/appcast.xml
 ```
 
 ### 2. Generate Sparkle Keys
@@ -77,7 +77,7 @@ The app reads these build settings at build time:
 `SPARKLE_APPCAST_URL` is already set in the Xcode project to:
 
 ```text
-https://sssstf0rest.github.io/corgi-notch/appcast.xml
+https://sssstf0rest.github.io/CorgiNotch/appcast.xml
 ```
 
 `SPARKLE_PUBLIC_ED_KEY` is now committed in the Xcode project and embedded in normal builds by default.
@@ -188,7 +188,7 @@ Verify all of the following:
 - the release archive was built with the correct `SPARKLE_PUBLIC_ED_KEY`
 - the release archive was attached to the published GitHub release
 - the workflow succeeded
-- `https://sssstf0rest.github.io/corgi-notch/appcast.xml` is publicly reachable
+- `https://sssstf0rest.github.io/CorgiNotch/appcast.xml` is publicly reachable
 
 ### Workflow fails with missing Sparkle configuration
 
@@ -202,6 +202,6 @@ Make sure these exist:
 That means the release archive was built without the expected feed settings. Rebuild it using:
 
 ```bash
-SPARKLE_APPCAST_URL="https://sssstf0rest.github.io/corgi-notch/appcast.xml" \
+SPARKLE_APPCAST_URL="https://sssstf0rest.github.io/CorgiNotch/appcast.xml" \
 ./scripts/release/build-release-archive.sh
 ```
