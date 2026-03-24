@@ -4,7 +4,7 @@
 <h3 style="font-size: 2.5rem; letter-spacing: 1px;">CorgiNotch</h3>
 <p style="font-size: 1.15rem; font-weight: 500;">
     <strong>A maintained continuation of MewNotch for modern macOS.</strong><br>
-    CorgiNotch is a free, open-source macOS app that turns the MacBook notch into a configurable, native HUD for brightness, volume, and now-playing controls. Minimal, polished, and privacy-friendly.
+    CorgiNotch is a free, open-source macOS notch app that turns the MacBook notch into a configurable, native HUD for brightness, volume, and now-playing controls. Minimal, polished, and privacy-friendly.
   </p>
 
 <br/><br/>
